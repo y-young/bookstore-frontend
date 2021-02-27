@@ -1,0 +1,47 @@
+@import "~inter-ui/inter.css";
+@import "~antd/dist/antd.less";
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:global {
+  .ant-card {
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.12);
+    .ant-card-meta-title {
+      font-weight: 600;
+    }
+  }
+
+  .ant-card-meta-detail > div:not(:last-child) {
+    margin-bottom: 0;
+  }
+
+  .body {
+    color: @primary-color;
+  }
+
+  .ant-breadcrumb {
+    padding: 0 20px;
+    margin: 30px 0;
+  }
+
+  // .ant-card-meta-description {
+  //   font-size: @font-size-sm;
+  // }
+
+  // .ant-message {
+  //   font-size: @font-size-sm;
+  //   .anticon {
+  //     font-size: @font-size-base;
+  //   }
+  // }
+
+  // .ant-form-item-control-input {
+  //   input {
+  //     font-size: 0.875rem;
+  //   }
+  // }
+}

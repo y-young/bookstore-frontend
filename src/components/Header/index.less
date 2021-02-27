@@ -1,0 +1,36 @@
+@import "@/theme.less";
+
+.header {
+  padding: 0 100px;
+  // position: fixed;
+  width: 100%;
+  // top: 0;
+  // z-index: 1000;
+  background-color: #ffffff;
+  height: 60px;
+}
+
+.headerAffix {
+  box-shadow: none;
+  border-bottom: solid 1px rgb(234, 234, 234);
+  // transition: box-shadow 0.3s, border 0.3s;
+}
+
+:global {
+  .ant-affix {
+    box-shadow: @small-shadow;
+    border: none;
+  }
+}
+
+.logoText:global(.ant-typography) {
+  vertical-align: bottom;
+  margin-bottom: 5px;
+  margin-left: 10px;
+  display: inline-block;
+}
+
+.cartIcon {
+  font-size: 20px;
+  cursor: pointer;
+}

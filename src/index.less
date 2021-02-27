@@ -8,6 +8,10 @@ body {
 }
 
 :global {
+  .pageTitle:global(.ant-typography) {
+    margin-bottom: 0;
+  }
+
   .ant-card {
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.12);
     .ant-card-meta-title {
@@ -28,20 +32,22 @@ body {
     margin: 30px 0;
   }
 
-  // .ant-card-meta-description {
-  //   font-size: @font-size-sm;
-  // }
+  .ant-menu-horizontal:not(.ant-menu-dark) {
+    border-bottom: none;
 
-  // .ant-message {
-  //   font-size: @font-size-sm;
-  //   .anticon {
-  //     font-size: @font-size-base;
-  //   }
-  // }
+    .ant-menu-item-selected {
+      border-bottom: none;
+    }
 
-  // .ant-form-item-control-input {
-  //   input {
-  //     font-size: 0.875rem;
-  //   }
-  // }
+    & > .ant-menu-item,
+    & > .ant-menu-submenu {
+      transition: none;
+      margin-top: 0;
+      border-bottom: none;
+
+      &:hover {
+        border-bottom: none;
+      }
+    }
+  }
 }

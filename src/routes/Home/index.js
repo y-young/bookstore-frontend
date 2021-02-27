@@ -30,7 +30,7 @@ const Home = () => {
       </Carousel>
       <Row gutter={32} className={styles.bookGrid}>
         {books.map((book) => (
-          <Col span={6}>
+          <Col span={6} key={book.id}>
             <BookCard book={book} />
           </Col>
         ))}

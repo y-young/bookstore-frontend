@@ -21,13 +21,18 @@ const OrderItem = ({ book, readOnly = false }) => {
         style={{ flexGrow: 3 }}
       />
       <Col flex={1}>
-        <InputNumber
-          min={1}
-          defaultValue={book.amount ? book.amount : 1}
-          style={{ width: "60px" }}
-          readOnly={readOnly}
-        />{" "}
-        件
+        {readOnly ? (
+          <>{book.amount ? book.amount : 1} 件</>
+        ) : (
+          <>
+            <InputNumber
+              min={1}
+              defaultValue={book.amount ? book.amount : 1}
+              style={{ width: "60px" }}
+            />{" "}
+            件
+          </>
+        )}
       </Col>
       <Col flex="1 1 50px" className={styles.bookPrice}>
         {currencyFormat(book.price)}

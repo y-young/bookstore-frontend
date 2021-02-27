@@ -1,8 +1,14 @@
 import Footer from "components/Footer";
 import Header from "components/Header";
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
 import BookDetail from "routes/BookDetail";
+import Books from "routes/Books";
 import Cart from "routes/Cart";
 import Home from "routes/Home";
 import Login from "routes/Login";
@@ -25,6 +31,9 @@ const App = () => {
           <Route path="/register">
             <Register />
           </Route>
+          <Route path="/books">
+            <Books />
+          </Route>
           <Route path="/book">
             <BookDetail />
           </Route>
@@ -34,6 +43,7 @@ const App = () => {
           <Route path="/result">
             <OrderResult />
           </Route>
+          <Redirect from="*" to="/" />
         </Switch>
       </main>
       <Footer />

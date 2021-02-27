@@ -3,7 +3,6 @@ import { ArrowRightOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Button, Col, Divider, Popconfirm, Row, Space, Typography } from "antd";
 import OrderItemList from "components/OrderItemList";
 import { useHistory } from "react-router-dom";
-import styles from "./index.less";
 
 const Cart = () => {
   const history = useHistory();
@@ -11,7 +10,7 @@ const Cart = () => {
   return (
     <>
       <Row justify="space-between" align="middle">
-        <Typography.Title level={2} className={styles.cartTitle}>
+        <Typography.Title level={2} className="pageTitle">
           购物车
         </Typography.Title>
         <Popconfirm

@@ -13,7 +13,7 @@ const OrderItem = ({ book, readOnly = false }) => {
       <List.Item.Meta
         avatar={<Image src={book.cover} width={60} height={60} />}
         title={
-          <Link to="/book" className={styles.bookTitle}>
+          <Link to={`/books/${book.id}`} className={styles.bookTitle}>
             {book.title}
           </Link>
         }

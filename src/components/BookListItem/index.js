@@ -17,7 +17,7 @@ const BookListItem = ({ book }) => {
       <List.Item.Meta
         avatar={<Image src={book.cover} width={100} height={100} />}
         title={
-          <Link to="/book" className={styles.bookTitle}>
+          <Link to={`/books/${book.id}`} className={styles.bookTitle}>
             {book.title}
           </Link>
         }

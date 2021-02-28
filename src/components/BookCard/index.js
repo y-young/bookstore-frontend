@@ -1,17 +1,22 @@
 import { Card } from "antd";
 import { useHistory } from "react-router-dom";
 
-const BookCard = (props) => {
+const BookCard = ({ book }) => {
   const history = useHistory();
-  const { title, author, cover } = props.book;
 
   return (
     <Card
       hoverable
-      cover={<img alt={title} src={cover} style={{ borderRadius: "10px" }} />}
-      onClick={() => history.push("/book")}
+      cover={
+        <img
+          alt={book.title}
+          src={book.cover}
+          style={{ borderRadius: "10px" }}
+        />
+      }
+      onClick={() => history.push(`/books/${book.id}`)}
     >
-      <Card.Meta title={title} description={author} />
+      <Card.Meta title={book.title} description={book.author} />
     </Card>
   );
 };

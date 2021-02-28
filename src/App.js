@@ -31,11 +31,11 @@ const App = () => {
           <Route path="/register">
             <Register />
           </Route>
+          <Route path="/books/:bookId">
+            <BookDetail />
+          </Route>
           <Route path="/books">
             <Books />
-          </Route>
-          <Route path="/book">
-            <BookDetail />
           </Route>
           <Route path="/cart">
             <Cart />

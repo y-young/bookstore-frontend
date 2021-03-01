@@ -29,6 +29,7 @@ const BookListItem = ({ book }) => {
           </Button>
         ),
       ]}
+      className={styles.bookListItem}
     >
       <List.Item.Meta
         avatar={<Image src={book.cover} width={100} height={100} />}
@@ -38,15 +39,15 @@ const BookListItem = ({ book }) => {
           </Link>
         }
         description={
-          <span>
-            {book.author}
+          <>
+            <span className={styles.bookAuthor}>{book.author}</span>
             <br />
             ISBN: {book.isbn}
-          </span>
+          </>
         }
-        style={{ flexGrow: 3 }}
+        className={styles.bookDetail}
       />
-      <Col flex="1 1 70px">
+      <Col flex="2 1">
         <StockStatus stock={book.stock} />
       </Col>
       <Col flex="1 1" className={styles.bookPrice}>

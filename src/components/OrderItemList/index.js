@@ -4,7 +4,7 @@ import OrderItem from "components/OrderItem";
 import { useHistory } from "react-router-dom";
 import { currencyFormat, totalSum } from "utils/helpers";
 
-const OrderItemList = ({ onDelete, items = books, readOnly = false }) => {
+const OrderItemList = ({ items = books, readOnly = false }) => {
   const history = useHistory();
 
   return (
@@ -23,9 +23,7 @@ const OrderItemList = ({ onDelete, items = books, readOnly = false }) => {
           )}
         </>
       }
-      renderItem={(item) => (
-        <OrderItem book={item} readOnly={readOnly} onDelete={onDelete} />
-      )}
+      renderItem={(item) => <OrderItem book={item} readOnly={readOnly} />}
       locale={{
         emptyText: (
           <Empty

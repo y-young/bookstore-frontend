@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+let listeners = [];
 // userId = 0 for guest
 // empty cart when logged out
 const useCart = (userId = 0) => {
@@ -28,10 +29,20 @@ const useCart = (userId = 0) => {
     return object2Array(getCart());
   });
 
+  useEffect(() => {
+    listeners.push(setCartItems);
+    return () => {
+      listeners = listeners.filter((listener) => listener !== setCartItems);
+    };
+  }, [setCartItems]);
+
   const updateCart = (items) => {
     try {
-      setCartItems(object2Array(items));
       window.localStorage.setItem(`cart_${userId}`, JSON.stringify(items));
+      const newState = object2Array(items);
+      listeners.forEach((notify) => {
+        notify(newState);
+      });
     } catch (error) {
       console.log(error);
     }

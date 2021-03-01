@@ -11,7 +11,8 @@ export const currencyFormat = (amount) => {
 export const totalSum = (books) => {
   let total = 0;
   books.forEach((book) => {
-    total += book.price * book.amount;
+    const amount = book.amount ? book.amount : 1; // FIXME
+    total += book.price * amount;
   });
   return total;
 };

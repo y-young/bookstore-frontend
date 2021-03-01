@@ -6,7 +6,7 @@ import useCart from "utils/useCart";
 
 const Cart = () => {
   const history = useHistory();
-  const { cartItems, emptyCart, removeFromCart } = useCart();
+  const { cartItems, removeFromCart, emptyCart } = useCart();
 
   return (
     <>

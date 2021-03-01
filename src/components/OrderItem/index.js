@@ -1,11 +1,11 @@
-import { Col, Image, InputNumber, List, Typography } from "antd";
+import { Badge, Col, Image, InputNumber, List, Typography } from "antd";
 import { Link } from "react-router-dom";
 import { currencyFormat } from "utils/helpers";
 import useCart from "utils/useCart";
 import styles from "./index.less";
 
-const OrderItem = ({ book, onDelete, readOnly = false }) => {
-  const { changeAmount } = useCart();
+const OrderItem = ({ book, readOnly = false }) => {
+  const { removeFromCart, changeAmount } = useCart();
 
   return (
     <List.Item
@@ -13,11 +13,15 @@ const OrderItem = ({ book, onDelete, readOnly = false }) => {
         readOnly
           ? []
           : [
-              <Typography.Link type="danger" onClick={() => onDelete(book)}>
+              <Typography.Link
+                type="danger"
+                onClick={() => removeFromCart(book)}
+              >
                 移除
               </Typography.Link>,
             ]
       }
+      className={styles.orderListItem}
     >
       <List.Item.Meta
         avatar={<Image src={book.cover} width={60} height={60} />}
@@ -27,7 +31,7 @@ const OrderItem = ({ book, onDelete, readOnly = false }) => {
           </Link>
         }
         description={book.author}
-        style={{ flexGrow: 3 }}
+        className={styles.bookDetail}
       />
       <Col flex={1}>
         {readOnly ? (
@@ -37,16 +41,26 @@ const OrderItem = ({ book, onDelete, readOnly = false }) => {
             <InputNumber
               min={1}
               max={book.stock}
-              defaultValue={book.amount ? book.amount : 1}
+              value={book.amount ? book.amount : 1} // FIXME
               onChange={(amount) => changeAmount(book, amount)}
-              style={{ width: "70px" }}
+              className={styles.amountInput}
             />{" "}
             件
           </>
         )}
       </Col>
       <Col flex="1 1 50px" className={styles.bookPrice}>
-        {currencyFormat(book.price)}
+        {currencyFormat(book.price)}{" "}
+        <span className={styles.amountBadge}>
+          ×
+          <Badge
+            count={book.amount}
+            overflowCount={Infinity}
+            className={styles.amountBadge}
+            // style is injected into child element, only inline styles can be used
+            style={{ color: "#999", backgroundColor: "#fff" }}
+          ></Badge>
+        </span>
       </Col>
     </List.Item>
   );

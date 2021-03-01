@@ -1,17 +1,33 @@
-import { ShoppingCartOutlined } from "@ant-design/icons";
-import { Button, Col, Image, List } from "antd";
+import { BellOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import { Button, Col, Image, List, message } from "antd";
 import StockStatus from "components/StockStatus";
 import { Link } from "react-router-dom";
 import { currencyFormat } from "utils/helpers";
+import useCart from "utils/useCart";
 import styles from "./index.less";
 
 const BookListItem = ({ book }) => {
+  const { addToCart } = useCart();
+
+  const add2Cart = () => {
+    addToCart(book);
+    message.success("已添加到购物车");
+  };
+
   return (
     <List.Item
       actions={[
-        <Button type="primary" icon={<ShoppingCartOutlined />}>
-          加入购物车
-        </Button>,
+        book.stock === 0 ? (
+          <Button icon={<BellOutlined />}>到货通知</Button>
+        ) : (
+          <Button
+            type="primary"
+            icon={<ShoppingCartOutlined />}
+            onClick={add2Cart}
+          >
+            加入购物车
+          </Button>
+        ),
       ]}
     >
       <List.Item.Meta
@@ -21,10 +37,15 @@ const BookListItem = ({ book }) => {
             {book.title}
           </Link>
         }
-        description={book.author}
+        description={
+          <span>
+            {book.author}
+            <br />
+            ISBN: {book.isbn}
+          </span>
+        }
         style={{ flexGrow: 3 }}
       />
-      <Col flex="1 1 80px">ISBN: {book.isbn}</Col>
       <Col flex="1 1 70px">
         <StockStatus stock={book.stock} />
       </Col>

@@ -1,13 +1,22 @@
 import { Col, Image, InputNumber, List, Typography } from "antd";
 import { Link } from "react-router-dom";
 import { currencyFormat } from "utils/helpers";
+import useCart from "utils/useCart";
 import styles from "./index.less";
 
-const OrderItem = ({ book, readOnly = false }) => {
+const OrderItem = ({ book, onDelete, readOnly = false }) => {
+  const { changeAmount } = useCart();
+
   return (
     <List.Item
       actions={
-        readOnly ? [] : [<Typography.Link type="danger">移除</Typography.Link>]
+        readOnly
+          ? []
+          : [
+              <Typography.Link type="danger" onClick={() => onDelete(book)}>
+                移除
+              </Typography.Link>,
+            ]
       }
     >
       <List.Item.Meta
@@ -27,8 +36,10 @@ const OrderItem = ({ book, readOnly = false }) => {
           <>
             <InputNumber
               min={1}
+              max={book.stock}
               defaultValue={book.amount ? book.amount : 1}
-              style={{ width: "60px" }}
+              onChange={(amount) => changeAmount(book, amount)}
+              style={{ width: "70px" }}
             />{" "}
             件
           </>

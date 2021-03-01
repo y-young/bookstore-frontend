@@ -1,15 +1,18 @@
 import { BellOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Button, message, Skeleton, Space } from "antd";
 import { useHistory } from "react-router-dom";
+import useCart from "utils/useCart";
 
 const BookDetailButton = ({ book }) => {
   const history = useHistory();
+  const { addToCart } = useCart();
 
   const buy = () => {
     history.push("/cart");
   };
 
-  const addToCart = () => {
+  const add2Cart = () => {
+    addToCart(book);
     message.success("已加入购物车");
   };
 
@@ -31,7 +34,7 @@ const BookDetailButton = ({ book }) => {
               <Button
                 icon={<ShoppingCartOutlined />}
                 size="large"
-                onClick={addToCart}
+                onClick={add2Cart}
               >
                 加入购物车
               </Button>

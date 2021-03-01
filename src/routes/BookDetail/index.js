@@ -11,7 +11,6 @@ const BookDetail = () => {
   const [book, setBook] = useState(null);
 
   useEffect(() => {
-    console.log(bookId);
     setBook(books[bookId - 1]); // TODO
   }, [bookId]);
 

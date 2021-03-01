@@ -6,6 +6,7 @@ import styles from "./index.less";
 
 const OrderResult = () => {
   const history = useHistory();
+  // TODO: Get order items from server
 
   return (
     <>

@@ -10,7 +10,7 @@ const BookDescription = ({ book }) => {
     <>
       <Typography.Title level={2}>{title}</Typography.Title>
       <div className={styles.bookMeta}>
-        <p>{author}</p>
+        <p className={styles.bookAuthor}>{author}</p>
         <p>ISBN：{isbn}</p>
         <p>
           状态：

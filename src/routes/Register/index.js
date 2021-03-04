@@ -60,7 +60,7 @@ const Register = () => {
               ]}
               {...layout}
             >
-              <Input placeholder="电子邮件地址" />
+              <Input type="email" placeholder="电子邮件地址" />
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 2, span: 20 }}>
               <Button type="primary" htmlType="submit" block>

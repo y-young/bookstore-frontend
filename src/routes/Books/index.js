@@ -1,6 +1,6 @@
 import books from "@/assets/books";
-import { Col, Divider, Input, List, Row, Typography } from "antd";
-import BookListItem from "components/BookListItem";
+import { Col, Divider, Input, Row, Typography } from "antd";
+import BookList from "components/BookList";
 
 const Books = () => {
   return (
@@ -14,11 +14,7 @@ const Books = () => {
         </Col>
       </Row>
       <Divider />
-      <List
-        itemLayout="horizontal"
-        dataSource={books}
-        renderItem={(item) => <BookListItem book={item} />}
-      />
+      <BookList books={books} />
     </>
   );
 };

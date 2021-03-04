@@ -1,0 +1,64 @@
+@import "@/theme.less";
+
+.bookTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: @text-color;
+}
+
+.bookAuthor {
+  color: @text-color;
+}
+
+.bookPrice {
+  text-align: end;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.bookList {
+  :global {
+    .ant-card {
+      box-shadow: none;
+    }
+
+    .ant-pro-table-list-toolbar {
+      display: none;
+    }
+
+    .ant-pro-list-row {
+      padding: 0;
+    }
+
+    .ant-image {
+      margin-right: 8px;
+    }
+
+    .ant-pro-list-row-header {
+      flex: 4 2;
+    }
+
+    .ant-pro-list-row-content {
+      flex: 3 1;
+      margin: 0;
+    }
+
+    .ant-list-item-action {
+      text-align: center;
+      flex: 2 1;
+    }
+  }
+}
+
+.bookList.withOption {
+  :global {
+    .ant-pro-list-row-header {
+      flex-grow: 6;
+    }
+
+    .ant-pro-list-row-header-option {
+      padding: 0 24px;
+      align-items: center;
+    }
+  }
+}

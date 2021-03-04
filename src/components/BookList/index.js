@@ -6,8 +6,9 @@ import {
 } from "@ant-design/icons";
 import ProList from "@ant-design/pro-list";
 import { Button, Col, Image, message, Row } from "antd";
+import BookEditModal from "components/BookEditModal";
 import StockStatus from "components/StockStatus";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { currencyFormat } from "utils/helpers";
 import useCart from "utils/useCart";
@@ -15,16 +16,38 @@ import styles from "./index.less";
 
 const BookList = ({ books }) => {
   const { addToCart } = useCart();
-  const isAdmin = false; //TODO: use auth
+  const isAdmin = true; //TODO: use auth
+  const [bookList, setBookList] = useState([]);
+  // Book to edit
+  const [currentBook, setCurrentBook] = useState(undefined);
+  const [modalVisible, setModalVisible] = useState(false);
   const [selectedBooks, setSelectedBooks] = useState([]);
   const rowSelection = {
     selectedBooks,
     onChange: (books) => setSelectedBooks(books),
   };
 
+  useEffect(() => {
+    setBookList(books);
+  }, [books]);
+
   const add2Cart = (book) => {
     addToCart(book);
     message.success("已添加到购物车");
+  };
+
+  const editBook = (book) => {
+    setCurrentBook(book);
+    setModalVisible(true);
+  };
+
+  const finishEditing = () => {
+    // TODO: reload list
+    setModalVisible(false);
+  };
+
+  const deleteBook = (book) => {
+    setBookList(bookList.filter((item) => item.id !== book.id));
   };
 
   const renderUserActions = (book) => [
@@ -42,8 +65,15 @@ const BookList = ({ books }) => {
   ];
 
   const renderAdminActions = (book) => [
-    <Button icon={<EditOutlined />}>编辑</Button>,
-    <Button danger icon={<DeleteOutlined />}>
+    <Button key="edit" icon={<EditOutlined />} onClick={() => editBook(book)}>
+      编辑
+    </Button>,
+    <Button
+      danger
+      key="delete"
+      icon={<DeleteOutlined />}
+      onClick={() => deleteBook(book)}
+    >
       删除
     </Button>,
   ];
@@ -51,7 +81,7 @@ const BookList = ({ books }) => {
   return (
     <>
       <ProList
-        dataSource={books}
+        dataSource={bookList}
         rowKey="id"
         className={
           isAdmin ? [styles.bookList, styles.withOption] : styles.bookList
@@ -97,6 +127,13 @@ const BookList = ({ books }) => {
           },
         }}
       />
+      {isAdmin && (
+        <BookEditModal
+          isVisible={modalVisible}
+          book={currentBook}
+          closeCallback={finishEditing}
+        />
+      )}
     </>
   );
 };

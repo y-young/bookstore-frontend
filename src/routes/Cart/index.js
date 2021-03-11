@@ -1,6 +1,6 @@
 import { ArrowRightOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Button, Col, Divider, Popconfirm, Row, Space, Typography } from "antd";
-import OrderItemList from "components/OrderItemList";
+import OrderBookList from "components/OrderBookList";
 import { useHistory } from "react-router-dom";
 import useCart from "utils/useCart";
 
@@ -29,7 +29,7 @@ const Cart = () => {
         )}
       </Row>
       <Divider />
-      <OrderItemList items={cartItems} onDelete={removeFromCart} />
+      <OrderBookList items={cartItems} onDelete={removeFromCart} />
       {cartItems.length > 0 && (
         <Row justify="end">
           <Col>
@@ -41,7 +41,7 @@ const Cart = () => {
                 type="primary"
                 size="large"
                 icon={<ArrowRightOutlined />}
-                onClick={() => history.push("/result")}
+                onClick={() => history.push("/order")}
               >
                 结算
               </Button>

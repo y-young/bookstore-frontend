@@ -4,7 +4,7 @@ import { currencyFormat } from "utils/helpers";
 import useCart from "utils/useCart";
 import styles from "./index.less";
 
-const OrderItem = ({ book, readOnly = false }) => {
+const OrderBookItem = ({ book, readOnly = false }) => {
   const { removeFromCart, changeAmount } = useCart();
 
   return (
@@ -66,4 +66,4 @@ const OrderItem = ({ book, readOnly = false }) => {
   );
 };
 
-export default OrderItem;
+export default OrderBookItem;

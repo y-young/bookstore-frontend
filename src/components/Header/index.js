@@ -34,7 +34,9 @@ const Header = () => {
               <Menu.Item key="books">
                 <Link to="/books">书架</Link>
               </Menu.Item>
-              <Menu.Item key="orders">订单</Menu.Item>
+              <Menu.Item key="orders">
+                <Link to="/orders">订单</Link>
+              </Menu.Item>
             </Menu>
           </Col>
           <Col span={5}>

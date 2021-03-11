@@ -1,10 +1,10 @@
 import { CheckCircleFilled } from "@ant-design/icons";
 import { Button, Col, Divider, Row, Space, Typography } from "antd";
-import OrderItemList from "components/OrderItemList";
+import OrderBookList from "components/OrderBookList";
 import { useHistory } from "react-router-dom";
 import styles from "./index.less";
 
-const OrderResult = () => {
+const OrderDetail = () => {
   const history = useHistory();
   // TODO: Get order items from server
 
@@ -27,13 +27,10 @@ const OrderResult = () => {
         </Col>
       </Row>
       <Divider />
-      <OrderItemList readOnly />
+      <OrderBookList readOnly />
       <Row justify="end">
         <Col>
           <Space>
-            <Button size="large" onClick={() => history.push("/orders")}>
-              查看订单
-            </Button>
             <Button
               type="primary"
               size="large"
@@ -48,4 +45,4 @@ const OrderResult = () => {
   );
 };
 
-export default OrderResult;
+export default OrderDetail;

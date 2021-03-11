@@ -12,7 +12,8 @@ import Books from "routes/Books";
 import Cart from "routes/Cart";
 import Home from "routes/Home";
 import Login from "routes/Login";
-import OrderResult from "routes/OrderResult";
+import OrderDetail from "routes/OrderDetail";
+import Orders from "routes/Orders";
 import Register from "routes/Register";
 import styles from "./App.less";
 
@@ -40,8 +41,11 @@ const App = () => {
           <Route path="/cart">
             <Cart />
           </Route>
-          <Route path="/result">
-            <OrderResult />
+          <Route path="/order">
+            <OrderDetail />
+          </Route>
+          <Route path="/orders">
+            <Orders />
           </Route>
           <Redirect from="*" to="/" />
         </Switch>

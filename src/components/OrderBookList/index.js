@@ -1,10 +1,10 @@
 import books from "@/assets/books";
 import { Button, Empty, List, Row, Typography } from "antd";
-import OrderItem from "components/OrderItem";
+import OrderBookItem from "components/OrderBookItem";
 import { useHistory } from "react-router-dom";
 import { currencyFormat, totalSum } from "utils/helpers";
 
-const OrderItemList = ({ items = books, readOnly = false }) => {
+const OrderBookList = ({ items = books, readOnly = false }) => {
   const history = useHistory();
 
   return (
@@ -23,7 +23,7 @@ const OrderItemList = ({ items = books, readOnly = false }) => {
           )}
         </>
       }
-      renderItem={(item) => <OrderItem book={item} readOnly={readOnly} />}
+      renderItem={(item) => <OrderBookItem book={item} readOnly={readOnly} />}
       locale={{
         emptyText: (
           <Empty
@@ -45,4 +45,4 @@ const OrderItemList = ({ items = books, readOnly = false }) => {
   );
 };
 
-export default OrderItemList;
+export default OrderBookList;

@@ -1,27 +1,21 @@
 import books from "@/assets/books";
+import OrderList from "@/components/OrderList";
 import {
-  Button,
   Col,
   DatePicker,
   Divider,
-  Empty,
-  Image,
   Input,
-  List,
   Row,
   Space,
   Statistic,
   Typography,
 } from "antd";
-import { useHistory } from "react-router-dom";
-import { currencyFormat } from "utils/helpers";
 import styles from "./index.less";
 
 const { RangePicker } = DatePicker;
 
 const Orders = () => {
   const items = books;
-  const history = useHistory();
 
   return (
     <>
@@ -29,7 +23,7 @@ const Orders = () => {
         <Typography.Title level={2} className="pageTitle">
           订单
         </Typography.Title>
-        <Col style={{ textAlign: "end" }}>
+        <Col>
           <Space>
             <Input.Search placeholder="搜索图书" />
             <RangePicker />
@@ -50,56 +44,7 @@ const Orders = () => {
       </Row>
       <Row gutter={16}>
         <Col span={20}>
-          <List
-            itemLayout="horizontal"
-            dataSource={items}
-            renderItem={(item) => (
-              <List.Item
-                actions={[
-                  <Button type="primary" onClick={() => history.push("/order")}>
-                    查看详情
-                  </Button>,
-                ]}
-                className={styles.orderListItem}
-              >
-                <List.Item.Meta
-                  avatar={
-                    <Space>
-                      <Image src={item.cover} width={60} height={60} />
-                      <Image src={item.cover} width={60} height={60} />
-                      <Image src={item.cover} width={60} height={60} />
-                      <div className={styles.booksExtra}>+3</div>
-                    </Space>
-                  }
-                  title={"时间：2021-03-11 11:11:11"}
-                  description={
-                    String(item.amount ? item.amount : 1) + " 件商品"
-                  }
-                  className={styles.orderBookItems}
-                />
-                <Col flex="1 1 50px" className={styles.orderTotal}>
-                  {currencyFormat(item.price)}{" "}
-                </Col>
-              </List.Item>
-            )}
-            locale={{
-              emptyText: (
-                <Empty
-                  description={
-                    <span style={{ fontSize: "26px" }}>您还没有订单</span>
-                  }
-                >
-                  <Button
-                    type="primary"
-                    size="large"
-                    onClick={() => history.push("/")}
-                  >
-                    去购物
-                  </Button>
-                </Empty>
-              ),
-            }}
-          />
+          <OrderList books={items} />
         </Col>
         <Col>
           <Divider type="vertical" className={styles.divider} />

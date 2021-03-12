@@ -1,5 +1,6 @@
-import { Form, Input, InputNumber, message, Modal } from "antd";
-import { useEffect } from "react";
+import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
+import { Form, Input, InputNumber, message, Modal, Upload } from "antd";
+import { useEffect, useState } from "react";
 import styles from "./index.less";
 
 const layout = {
@@ -8,9 +9,14 @@ const layout = {
 
 const BookEditModal = ({ book, isVisible, closeCallback }) => {
   const [form] = Form.useForm();
+  const [loading, setLoading] = useState();
+  const [coverUrl, setCoverUrl] = useState();
 
   useEffect(() => {
     form.resetFields();
+    if (book) {
+      setCoverUrl(book.cover);
+    }
   }, [book, form]);
 
   const handleOk = () => {
@@ -29,6 +35,13 @@ const BookEditModal = ({ book, isVisible, closeCallback }) => {
     form.resetFields();
     closeCallback();
   };
+
+  const uploadButton = (
+    <div>
+      {loading ? <LoadingOutlined /> : <PlusOutlined />}
+      <div>上传封面</div>
+    </div>
+  );
 
   return (
     <Modal
@@ -89,6 +102,20 @@ const BookEditModal = ({ book, isVisible, closeCallback }) => {
             min={0}
             className={styles.inputNumber}
           />
+        </Form.Item>
+        <Form.Item
+          name="cover"
+          label="封面"
+          rules={[{ required: true }]}
+          {...layout}
+        >
+          <Upload name="avatar" listType="picture-card">
+            {coverUrl ? (
+              <img src={coverUrl} alt="avatar" style={{ width: "100%" }} />
+            ) : (
+              uploadButton
+            )}
+          </Upload>
         </Form.Item>
       </Form>
     </Modal>

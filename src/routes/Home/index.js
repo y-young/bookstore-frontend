@@ -1,5 +1,5 @@
 import books from "@/assets/books";
-import { Carousel, Col, Row } from "antd";
+import { Carousel, Col, Divider, Row, Typography } from "antd";
 import BookCard from "components/BookCard";
 import styles from "./index.less";
 
@@ -14,7 +14,7 @@ const contentStyle = {
 const Home = () => {
   return (
     <>
-      <Carousel autoplay>
+      <Carousel autoplay style={{ marginBottom: 20 }}>
         <div>
           <h3 style={contentStyle}>1</h3>
         </div>
@@ -28,6 +28,21 @@ const Home = () => {
           <h3 style={contentStyle}>4</h3>
         </div>
       </Carousel>
+      <Typography.Title level={2} className="pageTitle">
+        新书上架
+      </Typography.Title>
+      <Divider />
+      <Row gutter={32} className={styles.bookGrid}>
+        {books.map((book) => (
+          <Col span={6} key={book.id}>
+            <BookCard book={book} />
+          </Col>
+        ))}
+      </Row>
+      <Typography.Title level={2} className="pageTitle">
+        热销排行
+      </Typography.Title>
+      <Divider />
       <Row gutter={32} className={styles.bookGrid}>
         {books.map((book) => (
           <Col span={6} key={book.id}>

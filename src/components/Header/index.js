@@ -45,6 +45,9 @@ const Header = () => {
                   <Link to="/statistics/users">用户消费榜</Link>
                 </Menu.Item>
               </Menu.SubMenu>
+              <Menu.Item key="user-management">
+                <Link to="/users">用户管理</Link>
+              </Menu.Item>
             </Menu>
           </Col>
           <Col span={5}>

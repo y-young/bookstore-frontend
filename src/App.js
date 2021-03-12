@@ -15,6 +15,7 @@ import Login from "routes/Login";
 import OrderDetail from "routes/OrderDetail";
 import Orders from "routes/Orders";
 import Register from "routes/Register";
+import Statistics from "routes/Statistics";
 import styles from "./App.less";
 
 const App = () => {
@@ -46,6 +47,9 @@ const App = () => {
           </Route>
           <Route path="/orders">
             <Orders />
+          </Route>
+          <Route path="/statistics">
+            <Statistics />
           </Route>
           <Redirect from="*" to="/" />
         </Switch>

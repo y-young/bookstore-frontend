@@ -37,6 +37,14 @@ const Header = () => {
               <Menu.Item key="orders">
                 <Link to="/orders">订单</Link>
               </Menu.Item>
+              <Menu.SubMenu key="statistics" title="统计">
+                <Menu.Item key="statistics-books">
+                  <Link to="/statistics/books">书籍销量榜</Link>
+                </Menu.Item>
+                <Menu.Item key="statistics-users">
+                  <Link to="/statistics/users">用户消费榜</Link>
+                </Menu.Item>
+              </Menu.SubMenu>
             </Menu>
           </Col>
           <Col span={5}>
@@ -45,7 +53,7 @@ const Header = () => {
                 <Link to="/cart">购物车</Link>
               </Menu.Item>
               <Menu.SubMenu
-                key="SubMenu"
+                key="user"
                 title={<Avatar icon={<UserOutlined />} />}
               >
                 <Menu.Item key="login">

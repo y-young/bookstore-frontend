@@ -14,9 +14,8 @@ import { currencyFormat } from "utils/helpers";
 import useCart from "utils/useCart";
 import styles from "./index.less";
 
-const BookList = ({ books }) => {
+const BookList = ({ books, isAdmin = false }) => {
   const { addToCart } = useCart();
-  const isAdmin = true; //TODO: use auth
   const [bookList, setBookList] = useState([]);
   // Book to edit
   const [currentBook, setCurrentBook] = useState(undefined);

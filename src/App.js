@@ -18,6 +18,7 @@ import Register from "routes/Register";
 import Statistics from "routes/Statistics";
 import UserManagement from "routes/UserManagement";
 import styles from "./App.less";
+import BookManagement from "./routes/BookManagement";
 
 const App = () => {
   return (
@@ -52,7 +53,10 @@ const App = () => {
           <Route path="/statistics">
             <Statistics />
           </Route>
-          <Route path="/users">
+          <Route path="/manage/books">
+            <BookManagement />
+          </Route>
+          <Route path="/manage/users">
             <UserManagement />
           </Route>
           <Redirect from="*" to="/" />

@@ -1,15 +1,7 @@
 import books from "@/assets/books";
 import OrderList from "@/components/OrderList";
-import {
-  Col,
-  DatePicker,
-  Divider,
-  Input,
-  Row,
-  Space,
-  Statistic,
-  Typography,
-} from "antd";
+import { Col, DatePicker, Divider, Input, Row, Statistic } from "antd";
+import PageHeader from "components/PageHeader";
 import styles from "./index.less";
 
 const { RangePicker } = DatePicker;
@@ -19,18 +11,11 @@ const Orders = () => {
 
   return (
     <>
-      <Row justify="space-between" align="middle">
-        <Typography.Title level={2} className="pageTitle">
-          订单
-        </Typography.Title>
-        <Col>
-          <Space>
-            <Input.Search placeholder="搜索图书" />
-            <RangePicker />
-          </Space>
-        </Col>
-      </Row>
-      <Divider />
+      <PageHeader title="订单">
+        <Input.Search placeholder="搜索图书" />
+        <RangePicker />
+        <Divider />
+      </PageHeader>
       <Row gutter={16} className={styles.statistics}>
         <Col span={8}>
           <Statistic title="订单数量" value={items.length} />

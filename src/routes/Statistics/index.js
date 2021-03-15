@@ -1,14 +1,7 @@
 import BookStatistics from "@/components/BookStatistics";
 import UserStatistics from "@/components/UserStatistics";
-import {
-  Col,
-  DatePicker,
-  Divider,
-  Row,
-  Space,
-  Statistic,
-  Typography,
-} from "antd";
+import { Col, DatePicker, Row, Statistic } from "antd";
+import PageHeader from "components/PageHeader";
 import { Switch } from "react-router-dom";
 import { Route } from "react-router-dom/cjs/react-router-dom.min";
 import styles from "./index.less";
@@ -18,20 +11,16 @@ const { RangePicker } = DatePicker;
 const Statistics = () => {
   return (
     <>
-      <Row justify="space-between" align="middle">
-        <Typography.Title level={2} className="pageTitle">
+      <PageHeader
+        title={
           <Switch>
             <Route path="/statistics/books">书籍销量榜</Route>
             <Route path="/statistics/users">用户消费榜</Route>
           </Switch>
-        </Typography.Title>
-        <Col>
-          <Space>
-            <RangePicker />
-          </Space>
-        </Col>
-      </Row>
-      <Divider />
+        }
+      >
+        <RangePicker />
+      </PageHeader>
       <Row gutter={16} className={styles.statistics}>
         <Col span={8}>
           <Statistic title="订单数量" value={2897} />

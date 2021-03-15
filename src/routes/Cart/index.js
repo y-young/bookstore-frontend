@@ -1,6 +1,7 @@
 import { ArrowRightOutlined, DeleteOutlined } from "@ant-design/icons";
-import { Button, Col, Divider, Popconfirm, Row, Space, Typography } from "antd";
+import { Button, Col, Popconfirm, Row, Space } from "antd";
 import OrderBookList from "components/OrderBookList";
+import PageHeader from "components/PageHeader";
 import { useHistory } from "react-router-dom";
 import useCart from "utils/useCart";
 
@@ -10,10 +11,7 @@ const Cart = () => {
 
   return (
     <>
-      <Row justify="space-between" align="middle">
-        <Typography.Title level={2} className="pageTitle">
-          购物车
-        </Typography.Title>
+      <PageHeader title="购物车">
         {cartItems.length > 0 && (
           <Popconfirm
             placement="left"
@@ -27,8 +25,7 @@ const Cart = () => {
             </Button>
           </Popconfirm>
         )}
-      </Row>
-      <Divider />
+      </PageHeader>
       <OrderBookList items={cartItems} onDelete={removeFromCart} />
       {cartItems.length > 0 && (
         <Row justify="end">

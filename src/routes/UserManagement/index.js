@@ -1,14 +1,5 @@
-import {
-  Badge,
-  Button,
-  Col,
-  Divider,
-  Input,
-  message,
-  Row,
-  Table,
-  Typography,
-} from "antd";
+import { Badge, Button, Input, message, Table } from "antd";
+import PageHeader from "components/PageHeader";
 
 const data = [
   {
@@ -102,15 +93,9 @@ const UserManagement = () => {
 
   return (
     <>
-      <Row justify="space-between" align="middle">
-        <Typography.Title level={2} className="pageTitle">
-          用户管理
-        </Typography.Title>
-        <Col span={8}>
-          <Input.Search placeholder="搜索用户名或电子邮件地址" />
-        </Col>
-      </Row>
-      <Divider />
+      <PageHeader title="用户管理" span={8}>
+        <Input.Search placeholder="搜索用户名或电子邮件地址" />
+      </PageHeader>
       <Table columns={columns} dataSource={data} rowKey="id" />;
     </>
   );

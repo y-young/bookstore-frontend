@@ -23,17 +23,19 @@ const BookEditModal = ({ book, isVisible, closeCallback }) => {
     form
       .validateFields()
       .then((values) => {
+        setLoading(true);
         console.log(values); // TODO: submit
         message.success("提交成功");
+        setLoading(false);
         form.resetFields();
-        closeCallback();
+        closeCallback(book, values);
       })
       .catch((info) => {});
   };
 
   const handleCancel = () => {
     form.resetFields();
-    closeCallback();
+    closeCallback(book);
   };
 
   const uploadButton = (

@@ -14,6 +14,7 @@ import Cart from "routes/Cart";
 import Home from "routes/Home";
 import Login from "routes/Login";
 import OrderDetail from "routes/OrderDetail";
+import OrderManagement from "routes/OrderManagement";
 import Orders from "routes/Orders";
 import Register from "routes/Register";
 import Settings from "routes/Settings";
@@ -59,6 +60,9 @@ const App = () => {
           </Route>
           <Route path="/manage/users">
             <UserManagement />
+          </Route>
+          <Route path="/manage/orders">
+            <OrderManagement />
           </Route>
           <Route path="/settings">
             <Settings />

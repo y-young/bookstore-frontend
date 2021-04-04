@@ -2,6 +2,7 @@ import Logo from "@/assets/images/logo.svg";
 import {
   BarChartOutlined,
   BookOutlined,
+  ControlOutlined,
   FileDoneOutlined,
   HomeOutlined,
   ShoppingCartOutlined,
@@ -34,7 +35,7 @@ const Header = () => {
               </Typography.Title>
             </div>
           </Col>
-          <Col span={15}>
+          <Col span={12}>
             <Menu mode="horizontal">
               <Menu.Item key="home" icon={<HomeOutlined />}>
                 <Link to="/">首页</Link>
@@ -57,15 +58,24 @@ const Header = () => {
                   <Link to="/statistics/users">用户消费榜</Link>
                 </Menu.Item>
               </Menu.SubMenu>
-              <Menu.Item key="book-management">
-                <Link to="/manage/books">书籍管理</Link>
-              </Menu.Item>
-              <Menu.Item key="user-management">
-                <Link to="/manage/users">用户管理</Link>
-              </Menu.Item>
+              <Menu.SubMenu
+                key="management"
+                title="管理"
+                icon={<ControlOutlined />}
+              >
+                <Menu.Item key="book-management">
+                  <Link to="/manage/books">书籍管理</Link>
+                </Menu.Item>
+                <Menu.Item key="user-management">
+                  <Link to="/manage/users">用户管理</Link>
+                </Menu.Item>
+                <Menu.Item key="order-management">
+                  <Link to="/manage/orders">订单管理</Link>
+                </Menu.Item>
+              </Menu.SubMenu>
             </Menu>
           </Col>
-          <Col span={5}>
+          <Col span={5} offset={3}>
             <Menu mode="horizontal">
               <Menu.Item key="cart" icon={<ShoppingCartOutlined />}>
                 <Link to="/cart">购物车</Link>

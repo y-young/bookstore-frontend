@@ -1,16 +1,13 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Card, Col, Form, Input, Row, Typography } from "antd";
 import { Link } from "react-router-dom";
-import styles from "./index.less";
 
 const Login = () => {
   return (
     <Row justify="center">
       <Col span={10}>
-        <Card className={styles.loginCard} bordered={false}>
-          <Typography.Title level={2} className={styles.loginTitle}>
-            登录
-          </Typography.Title>
+        <Card className="singleCard" bordered={false}>
+          <Typography.Title level={2}>登录</Typography.Title>
           <Form name="login">
             <Form.Item
               name="username"

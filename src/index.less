@@ -12,6 +12,15 @@ body {
     margin-bottom: 0;
   }
 
+  .singleCard:global(.ant-card) {
+    box-shadow: @large-shadow;
+    padding: 30px;
+
+    h2:global(.ant-typography) {
+      margin-bottom: 1em;
+    }
+  }
+
   .ant-card {
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.12);
     .ant-card-meta-title {

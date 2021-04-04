@@ -8,6 +8,7 @@ import {
   Switch,
 } from "react-router-dom";
 import BookDetail from "routes/BookDetail";
+import BookManagement from "routes/BookManagement";
 import Books from "routes/Books";
 import Cart from "routes/Cart";
 import Home from "routes/Home";
@@ -15,10 +16,10 @@ import Login from "routes/Login";
 import OrderDetail from "routes/OrderDetail";
 import Orders from "routes/Orders";
 import Register from "routes/Register";
+import Settings from "routes/Settings";
 import Statistics from "routes/Statistics";
 import UserManagement from "routes/UserManagement";
 import styles from "./App.less";
-import BookManagement from "./routes/BookManagement";
 
 const App = () => {
   return (
@@ -58,6 +59,9 @@ const App = () => {
           </Route>
           <Route path="/manage/users">
             <UserManagement />
+          </Route>
+          <Route path="/settings">
+            <Settings />
           </Route>
           <Redirect from="*" to="/" />
         </Switch>

@@ -80,6 +80,9 @@ const Header = () => {
                 <Menu.Item key="register">
                   <Link to="/register">注册</Link>
                 </Menu.Item>
+                <Menu.Item key="settings">
+                  <Link to="/settings">设置</Link>
+                </Menu.Item>
               </Menu.SubMenu>
             </Menu>
           </Col>

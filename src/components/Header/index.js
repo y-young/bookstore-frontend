@@ -1,4 +1,12 @@
-import { ShoppingCartOutlined, UserOutlined } from "@ant-design/icons";
+import Logo from "@/assets/images/logo.svg";
+import {
+  BarChartOutlined,
+  BookOutlined,
+  FileDoneOutlined,
+  HomeOutlined,
+  ShoppingCartOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { Affix, Avatar, Col, Menu, Row, Typography } from "antd";
 import { Link, useHistory } from "react-router-dom";
 import styles from "./index.less";
@@ -15,29 +23,33 @@ const Header = () => {
           align="middle"
           justify="space-around"
         >
-          <Col span={5}>
-            <img
-              className={styles.logo}
-              src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
-              alt="Ant Design"
+          <Col span={4}>
+            <div
               onClick={() => history.push("/")}
-            />
-            <Typography.Title level={3} className={styles.logoText}>
-              Book Store
-            </Typography.Title>
+              className={styles.logoWrapper}
+            >
+              <img className={styles.logo} src={Logo} alt="E-Book" />
+              <Typography.Title level={3} className={styles.logoText}>
+                E-Book
+              </Typography.Title>
+            </div>
           </Col>
-          <Col span={14}>
+          <Col span={15}>
             <Menu mode="horizontal">
-              <Menu.Item key="home">
+              <Menu.Item key="home" icon={<HomeOutlined />}>
                 <Link to="/">首页</Link>
               </Menu.Item>
-              <Menu.Item key="books">
-                <Link to="/books">书架</Link>
+              <Menu.Item key="books" icon={<BookOutlined />}>
+                <Link to="/books">书籍</Link>
               </Menu.Item>
-              <Menu.Item key="orders">
+              <Menu.Item key="orders" icon={<FileDoneOutlined />}>
                 <Link to="/orders">订单</Link>
               </Menu.Item>
-              <Menu.SubMenu key="statistics" title="统计">
+              <Menu.SubMenu
+                key="statistics"
+                title="统计"
+                icon={<BarChartOutlined />}
+              >
                 <Menu.Item key="statistics-books">
                   <Link to="/statistics/books">书籍销量榜</Link>
                 </Menu.Item>

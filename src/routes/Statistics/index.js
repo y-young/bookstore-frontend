@@ -29,7 +29,12 @@ const Statistics = () => {
           <Statistic title="书籍销量" value={11278} />
         </Col>
         <Col span={8}>
-          <Statistic title="销售总金额" value={11271688} precision={2} />
+          <Statistic
+            title="销售总金额"
+            prefix={"￥"}
+            value={11271688}
+            precision={2}
+          />
         </Col>
       </Row>
       <Switch>

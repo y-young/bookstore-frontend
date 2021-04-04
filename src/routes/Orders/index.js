@@ -2,6 +2,7 @@ import books from "@/assets/books";
 import OrderList from "@/components/OrderList";
 import { Col, DatePicker, Divider, Input, Row, Statistic } from "antd";
 import PageHeader from "components/PageHeader";
+import BookTypeStatistics from "../../components/BookTypeStatistics";
 import styles from "./index.less";
 
 const { RangePicker } = DatePicker;
@@ -24,7 +25,7 @@ const Orders = () => {
           <Statistic title="商品数量" value={11} />
         </Col>
         <Col span={8}>
-          <Statistic title="总金额" value={1128} precision={2} />
+          <Statistic title="总金额" prefix={"￥"} value={1128} precision={2} />
         </Col>
       </Row>
       <Row gutter={16}>
@@ -35,14 +36,7 @@ const Orders = () => {
           <Divider type="vertical" className={styles.divider} />
         </Col>
         <Col span={3}>
-          <Row gutter={8} className={styles.bookStatistics}>
-            <Col span={18}>外国文学</Col>
-            <Col span={6}>10</Col>
-            <Col span={18}>科幻小说</Col>
-            <Col span={6}>23</Col>
-            <Col span={18}>计算机</Col>
-            <Col span={6}>3</Col>
-          </Row>
+          <BookTypeStatistics />
         </Col>
       </Row>
     </>

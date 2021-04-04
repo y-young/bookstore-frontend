@@ -6,8 +6,8 @@ import PageHeader from "components/PageHeader";
 const Books = () => {
   return (
     <>
-      <PageHeader title="书架" span={8}>
-        <Input.Search placeholder="搜索图书" />
+      <PageHeader title="书籍" span={8}>
+        <Input.Search placeholder="搜索书籍" />
       </PageHeader>
       <BookList books={books} />
     </>

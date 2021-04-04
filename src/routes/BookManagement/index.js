@@ -32,7 +32,9 @@ const BookManagement = () => {
   };
 
   const onAddBook = (_, newBook) => {
-    setBookList((bookList) => [...bookList, newBook]);
+    if (newBook) {
+      setBookList((bookList) => [...bookList, newBook]);
+    }
     setModalVisible(false);
   };
 

@@ -12,6 +12,12 @@
   border-bottom: solid 1px rgb(234, 234, 234);
 }
 
+.headerRow {
+  height: 100%;
+  max-width: 782pt;
+  margin: 0 auto;
+}
+
 :global {
   .ant-affix {
     box-shadow: @small-shadow;
@@ -38,4 +44,8 @@
 .cartIcon {
   font-size: 20px;
   cursor: pointer;
+}
+
+.rightSubMenu:global(.ant-menu) {
+  text-align: end;
 }

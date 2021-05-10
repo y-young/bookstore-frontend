@@ -4,22 +4,34 @@ import {
   BookOutlined,
   ControlOutlined,
   FileDoneOutlined,
+  FormOutlined,
   HomeOutlined,
+  LoginOutlined,
+  LogoutOutlined,
+  SettingOutlined,
   ShoppingCartOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Affix, Avatar, Col, Menu, Row, Typography } from "antd";
+import { Affix, Avatar, Col, Menu, message, Row, Typography } from "antd";
 import { Link, useHistory } from "react-router-dom";
+import useAuth from "utils/useAuth";
 import styles from "./index.less";
 
 const Header = () => {
   const history = useHistory();
+  const auth = useAuth();
+
+  const logout = () => {
+    auth.signout();
+    message.success("登出成功");
+    history.push("/login");
+  };
 
   return (
     <Affix offsetTop={0} className={styles.headerAffix}>
       <header className={styles.header}>
         <Row
-          style={{ height: "100%", maxWidth: "782pt", margin: "0 auto" }}
+          className={styles.headerRow}
           gutter={16}
           align="middle"
           justify="space-around"
@@ -75,25 +87,41 @@ const Header = () => {
               </Menu.SubMenu>
             </Menu>
           </Col>
-          <Col span={5} offset={3}>
-            <Menu mode="horizontal">
+          <Col span={6} offset={2}>
+            <Menu mode="horizontal" className={styles.rightSubMenu}>
               <Menu.Item key="cart" icon={<ShoppingCartOutlined />}>
                 <Link to="/cart">购物车</Link>
               </Menu.Item>
-              <Menu.SubMenu
-                key="user"
-                title={<Avatar icon={<UserOutlined />} />}
-              >
-                <Menu.Item key="login">
-                  <Link to="/login">登录</Link>
-                </Menu.Item>
-                <Menu.Item key="register">
-                  <Link to="/register">注册</Link>
-                </Menu.Item>
-                <Menu.Item key="settings">
-                  <Link to="/settings">设置</Link>
-                </Menu.Item>
-              </Menu.SubMenu>
+              {auth.user ? (
+                <Menu.SubMenu
+                  key="user"
+                  title={auth.user.username}
+                  icon={<UserOutlined />}
+                >
+                  <Menu.Item key="settings" icon={<SettingOutlined />}>
+                    <Link to="/settings">设置</Link>
+                  </Menu.Item>
+                  <Menu.Item
+                    key="logout"
+                    onClick={logout}
+                    icon={<LogoutOutlined />}
+                  >
+                    登出
+                  </Menu.Item>
+                </Menu.SubMenu>
+              ) : (
+                <Menu.SubMenu
+                  key="user"
+                  title={<Avatar icon={<UserOutlined />} />}
+                >
+                  <Menu.Item key="login" icon={<LoginOutlined />}>
+                    <Link to="/login">登录</Link>
+                  </Menu.Item>
+                  <Menu.Item key="register" icon={<FormOutlined />}>
+                    <Link to="/register">注册</Link>
+                  </Menu.Item>
+                </Menu.SubMenu>
+              )}
             </Menu>
           </Col>
         </Row>

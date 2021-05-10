@@ -1,14 +1,35 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Card, Col, Form, Input, Row, Typography } from "antd";
-import { Link } from "react-router-dom";
+import useRequest from "@umijs/use-request";
+import { Button, Card, Col, Form, Input, message, Row, Typography } from "antd";
+import { Link, useHistory } from "react-router-dom";
+import useAuth from "utils/useAuth";
 
 const Login = () => {
+  const history = useHistory();
+  const auth = useAuth();
+  const { run, loading } = useRequest(
+    (data) => ({
+      method: "post",
+      url: "/users/login",
+      data,
+    }),
+    {
+      manual: true,
+      onSuccess: (data) => {
+        const { user, authorization } = data;
+        auth.signin(user, authorization);
+        message.success("登录成功");
+        history.push("/");
+      },
+    }
+  );
+
   return (
     <Row justify="center">
       <Col span={10}>
         <Card className="singleCard" bordered={false}>
           <Typography.Title level={2}>登录</Typography.Title>
-          <Form name="login">
+          <Form name="login" onFinish={run}>
             <Form.Item
               name="username"
               rules={[{ required: true, message: "请输入用户名" }]}
@@ -22,7 +43,7 @@ const Login = () => {
               <Input.Password prefix={<LockOutlined />} placeholder="密码" />
             </Form.Item>
             <Form.Item>
-              <Button type="primary" htmlType="submit" block>
+              <Button type="primary" htmlType="submit" loading={loading} block>
                 登录
               </Button>
             </Form.Item>

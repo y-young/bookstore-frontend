@@ -10,6 +10,7 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "@umijs/hooks": "^1.9.3",
     "antd": "^4.12.3",
     "craco-antd": "^1.19.0",
     "inter-ui": "^3.15.0",

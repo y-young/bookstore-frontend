@@ -1,16 +1,33 @@
+import { UseAPIProvider } from "@umijs/use-request";
 import { ConfigProvider } from "antd";
 import zhCN from "antd/lib/locale/zh_CN";
 import React from "react";
 import ReactDOM from "react-dom";
+import request from "umi-request";
 import App from "./App";
 import "./index.less";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>
-    <ConfigProvider locale={zhCN}>
-      <App />
-    </ConfigProvider>
+    <UseAPIProvider
+      value={{
+        requestMethod: (param) => {
+          const prefix = "http://localhost:8080/api";
+          if (typeof param === "string") {
+            return request(param, { prefix });
+          }
+          if (typeof param === "object") {
+            return request(param.url, { ...param, prefix });
+          }
+        },
+        formatResult: (response) => response.data,
+      }}
+    >
+      <ConfigProvider locale={zhCN}>
+        <App />
+      </ConfigProvider>
+    </UseAPIProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

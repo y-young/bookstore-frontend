@@ -8,7 +8,6 @@ import {
   Redirect,
   Route,
   Switch,
-  useHistory,
 } from "react-router-dom";
 import BookDetail from "routes/BookDetail";
 import BookManagement from "routes/BookManagement";
@@ -27,15 +26,15 @@ import request from "umi-request";
 import styles from "./App.less";
 
 const App = () => {
-  const history = useHistory();
-
   return (
     <UseAPIProvider
       value={{
         requestMethod: (param) => {
           const prefix = "http://localhost:8080/api";
           const token = localStorage.getItem("bookstore_token");
-          const headers = token ? { Authorization: token } : {};
+          const headers = token
+            ? { Authorization: token.replaceAll('"', "") } // Remove double quotes
+            : {};
           if (typeof param === "string") {
             return request(param, { prefix, headers });
           }
@@ -44,7 +43,7 @@ const App = () => {
           }
         },
         formatResult: (response) => response.data,
-        onError: async (error, params) => {
+        onError: async (error) => {
           const body = await error.response.json();
           const { status } = error.response;
           switch (status) {
@@ -53,7 +52,11 @@ const App = () => {
               break;
             case 401:
               message.warn("请先登录");
-              history.push("/login");
+              window.location.href = "/login";
+              break;
+            case 404:
+              message.error("请求的资源未找到");
+              window.location.href = "/";
               break;
             default:
               message.error(body.message);
@@ -83,7 +86,7 @@ const App = () => {
             <Route path="/cart">
               <Cart />
             </Route>
-            <Route path="/order">
+            <Route path="/orders/:orderId">
               <OrderDetail />
             </Route>
             <Route path="/orders">

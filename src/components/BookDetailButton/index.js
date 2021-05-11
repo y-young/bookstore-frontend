@@ -1,4 +1,5 @@
 import { BellOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import useRequest from "@umijs/use-request";
 import { Button, message, Skeleton, Space } from "antd";
 import { useHistory } from "react-router-dom";
 import useCart from "utils/useCart";
@@ -6,10 +7,15 @@ import useCart from "utils/useCart";
 const BookDetailButton = ({ book }) => {
   const history = useHistory();
   const { addToCart } = useCart();
-
-  const buy = () => {
-    history.push("/cart");
-  };
+  const { run: buy, loading } = useRequest(
+    { method: "post", url: "/orders", data: [{ ...book, amount: 1 }] },
+    {
+      manual: true,
+      onSuccess: (data) => {
+        history.push(`/orders/${data.id}`);
+      },
+    }
+  );
 
   const add2Cart = () => {
     addToCart(book);
@@ -28,7 +34,12 @@ const BookDetailButton = ({ book }) => {
             </Button>
           ) : (
             <>
-              <Button type="primary" size="large" onClick={buy}>
+              <Button
+                type="primary"
+                size="large"
+                onClick={buy}
+                loading={loading}
+              >
                 立即购买
               </Button>
               <Button

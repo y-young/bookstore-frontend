@@ -1,4 +1,5 @@
 import { ArrowRightOutlined, DeleteOutlined } from "@ant-design/icons";
+import useRequest from "@umijs/use-request";
 import { Button, Col, Popconfirm, Row, Space } from "antd";
 import OrderBookList from "components/OrderBookList";
 import PageHeader from "components/PageHeader";
@@ -8,6 +9,15 @@ import useCart from "utils/useCart";
 const Cart = () => {
   const history = useHistory();
   const { cartItems, removeFromCart, emptyCart } = useCart();
+  const { run, loading } = useRequest(
+    { method: "post", url: "/orders", data: cartItems },
+    {
+      manual: true,
+      onSuccess: (data) => {
+        history.push(`/orders/${data.id}`);
+      },
+    }
+  );
 
   return (
     <>
@@ -38,7 +48,8 @@ const Cart = () => {
                 type="primary"
                 size="large"
                 icon={<ArrowRightOutlined />}
-                onClick={() => history.push("/order")}
+                onClick={run}
+                loading={loading}
               >
                 结算
               </Button>

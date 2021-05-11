@@ -1,15 +1,17 @@
 import { CheckCircleFilled } from "@ant-design/icons";
-import { Button, Col, Divider, Row, Space, Typography } from "antd";
+import useRequest from "@umijs/use-request";
+import { Button, Col, Divider, Row, Space, Spin, Typography } from "antd";
 import OrderBookList from "components/OrderBookList";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import styles from "./index.less";
 
 const OrderDetail = () => {
   const history = useHistory();
-  // TODO: Get order items from server
+  const { orderId } = useParams();
+  const { data, loading } = useRequest(`/orders/${orderId}`);
 
   return (
-    <>
+    <Spin spinning={loading}>
       <Row gutter={32} align="middle">
         <Col flex="70px">
           <CheckCircleFilled className={styles.successIcon} />
@@ -21,13 +23,13 @@ const OrderDetail = () => {
           <p className={styles.resultSubTitle}>以下是您的商品信息</p>
         </Col>
         <Col className={styles.orderInfo}>
-          订单编号：1
+          订单编号：{data?.id}
           <br />
-          时间：{new Date().toLocaleString()}
+          时间：{new Date(data?.time).toLocaleString()}
         </Col>
       </Row>
       <Divider />
-      <OrderBookList readOnly />
+      <OrderBookList readOnly items={data?.items} />
       <Row justify="end">
         <Col>
           <Space>
@@ -41,7 +43,7 @@ const OrderDetail = () => {
           </Space>
         </Col>
       </Row>
-    </>
+    </Spin>
   );
 };
 

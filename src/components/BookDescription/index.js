@@ -1,4 +1,4 @@
-import { Typography } from "antd";
+import { Tag, Typography } from "antd";
 import StockStatus from "components/StockStatus";
 import { currencyFormat } from "utils/helpers";
 import styles from "./index.less";
@@ -11,6 +11,11 @@ const BookDescription = ({ book }) => {
       <Typography.Title level={2}>{title}</Typography.Title>
       <div className={styles.bookMeta}>
         <p className={styles.bookAuthor}>{author}</p>
+        {book.type && (
+          <p>
+            <Tag color="blue">{book.type}</Tag>
+          </p>
+        )}
         <p>ISBN：{isbn}</p>
         <p>
           状态：

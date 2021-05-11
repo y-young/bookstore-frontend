@@ -3,8 +3,6 @@ process.env.BROWSER = "none";
 const path = require("path");
 const CracoAntDesignPlugin = require("craco-antd");
 const getCSSModuleLocalIdent = require("react-dev-utils/getCSSModuleLocalIdent");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-  .BundleAnalyzerPlugin;
 
 module.exports = {
   webpack: {
@@ -14,7 +12,6 @@ module.exports = {
       routes: path.join(path.resolve(__dirname, "./src/routes")),
       utils: path.join(path.resolve(__dirname, "./src/utils")),
     },
-    plugins: [new BundleAnalyzerPlugin()],
   },
   plugins: [
     {

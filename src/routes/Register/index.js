@@ -1,5 +1,6 @@
-import { Button, Card, Col, Form, Input, Row, Typography } from "antd";
-import { Link } from "react-router-dom";
+import useRequest from "@umijs/use-request";
+import { Button, Card, Col, Form, Input, message, Row, Typography } from "antd";
+import { Link, useHistory } from "react-router-dom";
 
 const layout = {
   labelCol: { span: 6 },
@@ -7,17 +8,32 @@ const layout = {
 };
 
 const Register = () => {
+  const history = useHistory();
+  const { run, loading } = useRequest(
+    (data) => ({
+      method: "post",
+      url: "/users/register",
+      data,
+    }),
+    {
+      manual: true,
+      onSuccess: () => {
+        message.success("注册成功");
+        history.push("/login");
+      },
+    }
+  );
+
   return (
     <Row justify="center">
       <Col span={14}>
         <Card className="singleCard" bordered={false}>
           <Typography.Title level={2}>注册</Typography.Title>
-          <Form name="register">
+          <Form name="register" onFinish={run} {...layout}>
             <Form.Item
               name="username"
               label="用户名"
               rules={[{ required: true }]}
-              {...layout}
             >
               <Input placeholder="用户名" />
             </Form.Item>
@@ -25,7 +41,6 @@ const Register = () => {
               name="password"
               label="密码"
               rules={[{ required: true }]}
-              {...layout}
             >
               <Input type="password" placeholder="密码" />
             </Form.Item>
@@ -44,7 +59,6 @@ const Register = () => {
                   },
                 }),
               ]}
-              {...layout}
             >
               <Input type="password" placeholder="重复密码" />
             </Form.Item>
@@ -55,12 +69,11 @@ const Register = () => {
                 { required: true },
                 { type: "email", message: "请输入有效的电子邮件地址" },
               ]}
-              {...layout}
             >
               <Input type="email" placeholder="电子邮件地址" />
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 2, span: 20 }}>
-              <Button type="primary" htmlType="submit" block>
+              <Button type="primary" htmlType="submit" block loading={loading}>
                 注册
               </Button>
             </Form.Item>

@@ -14,6 +14,7 @@ const Cart = () => {
     {
       manual: true,
       onSuccess: (data) => {
+        emptyCart();
         history.push(`/orders/${data.id}`);
       },
     }

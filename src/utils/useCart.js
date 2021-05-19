@@ -54,8 +54,7 @@ const useCart = (userId = 0) => {
       return; // Already in cart
     }
     // Add new item to cart
-    item.amount = 1;
-    items[item.id] = item;
+    items[item.id] = { book: item, amount: 1 };
     updateCart(items);
   };
 

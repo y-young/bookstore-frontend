@@ -8,7 +8,7 @@ const BookDetailButton = ({ book }) => {
   const history = useHistory();
   const { addToCart } = useCart();
   const { run: buy, loading } = useRequest(
-    { method: "post", url: "/orders", data: [{ ...book, amount: 1 }] },
+    { method: "post", url: "/orders", data: [{ book, amount: 1 }] },
     {
       manual: true,
       onSuccess: (data) => {

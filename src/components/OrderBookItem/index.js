@@ -4,8 +4,9 @@ import { currencyFormat } from "utils/helpers";
 import useCart from "utils/useCart";
 import styles from "./index.less";
 
-const OrderBookItem = ({ book, readOnly = false }) => {
+const OrderBookItem = ({ item, readOnly = false }) => {
   const { removeFromCart, changeAmount } = useCart();
+  const { book } = item;
 
   return (
     <List.Item
@@ -35,13 +36,13 @@ const OrderBookItem = ({ book, readOnly = false }) => {
       />
       <Col flex={1}>
         {readOnly ? (
-          <>{book.amount ? book.amount : 1} 件</>
+          <>{item.amount} 件</>
         ) : (
           <>
             <InputNumber
               min={1}
               max={book.stock}
-              value={book.amount ? book.amount : 1} // FIXME
+              value={item.amount}
               onChange={(amount) => changeAmount(book, amount)}
               className={styles.amountInput}
             />{" "}
@@ -54,7 +55,7 @@ const OrderBookItem = ({ book, readOnly = false }) => {
         <span className={styles.amountBadge}>
           ×
           <Badge
-            count={book.amount}
+            count={item.amount}
             overflowCount={Infinity}
             className={styles.amountBadge}
             // style is injected into child element, only inline styles can be used

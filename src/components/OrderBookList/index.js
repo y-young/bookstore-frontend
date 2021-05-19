@@ -22,7 +22,7 @@ const OrderBookList = ({ items, readOnly = false }) => {
           )}
         </>
       }
-      renderItem={(item) => <OrderBookItem book={item} readOnly={readOnly} />}
+      renderItem={(item) => <OrderBookItem item={item} readOnly={readOnly} />}
       locale={{
         emptyText: (
           <Empty

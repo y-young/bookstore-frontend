@@ -15,7 +15,10 @@ import useCart from "utils/useCart";
 import styles from "./index.less";
 
 const BookList = forwardRef(
-  ({ books, isAdmin = false, onEditBook, onDeleteBook }, ref) => {
+  (
+    { books, isAdmin = false, onEditBook, onDeleteBook, deleteLoading = false },
+    ref
+  ) => {
     const { addToCart } = useCart();
     // Book to edit
     const [currentBook, setCurrentBook] = useState(undefined);
@@ -83,6 +86,7 @@ const BookList = forwardRef(
         danger
         key="delete"
         icon={<DeleteOutlined />}
+        loading={deleteLoading}
         onClick={() => onDeleteBook(book)}
       >
         删除

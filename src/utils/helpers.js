@@ -18,3 +18,9 @@ export const totalSum = (items) => {
 export const totalAmount = (items) => {
   return items.map((item) => item.amount).reduce((prev, curr) => prev + curr);
 };
+
+export const imageBasePath = "http://localhost:8080/api/books/cover/";
+
+export const getCoverUrl = (cover) => {
+  return imageBasePath + cover;
+}

@@ -2,17 +2,20 @@ import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import useRequest from "@umijs/use-request";
 import { Form, Input, InputNumber, message, Modal, Upload } from "antd";
 import { useEffect, useState } from "react";
+import { getCoverUrl, imageBasePath } from "utils/helpers";
+import useAuth from "utils/useAuth";
 import styles from "./index.less";
 
 const BookEditModal = ({ book, isVisible, closeCallback }) => {
+  const auth = useAuth();
   const [form] = Form.useForm();
-  const [uploadLoading] = useState();
-  const [coverUrl, setCoverUrl] = useState();
+  const [uploadLoading, setUploadLoading] = useState(false);
+  const [coverFile, setCoverFile] = useState([]);
   const { run: addBook, loading: addLoading } = useRequest(
     (data) => ({
       method: "post",
       url: "/books",
-      data: { ...data, price: data.price * 100 },
+      data,
     }),
     {
       manual: true,
@@ -25,7 +28,7 @@ const BookEditModal = ({ book, isVisible, closeCallback }) => {
     (bookId, data) => ({
       method: "put",
       url: `/books/${bookId}`,
-      data: { ...data, price: data.price * 100 },
+      data,
     }),
     {
       manual: true,
@@ -38,7 +41,7 @@ const BookEditModal = ({ book, isVisible, closeCallback }) => {
   useEffect(() => {
     form.resetFields();
     if (book) {
-      setCoverUrl(book.cover);
+      setCoverFile([{ name: book.cover, thumbUrl: getCoverUrl(book.cover) }]);
     }
   }, [book, form]);
 
@@ -46,14 +49,18 @@ const BookEditModal = ({ book, isVisible, closeCallback }) => {
     form
       .validateFields()
       .then(async (values) => {
-        console.log(values);
+        const data = {
+          ...values,
+          price: values.price * 100,
+          cover: coverFile[0].name,
+        };
         if (book && book.id) {
-          await editBook(book.id, values);
+          await editBook(book.id, data);
         } else {
-          await addBook(values);
+          await addBook(data);
         }
         form.resetFields();
-        closeCallback(book, values);
+        closeCallback(book, data);
       })
       .catch((info) => {});
   };
@@ -61,6 +68,41 @@ const BookEditModal = ({ book, isVisible, closeCallback }) => {
   const handleCancel = () => {
     form.resetFields();
     closeCallback(book);
+  };
+
+  const beforeUpload = (file) => {
+    const isTypeValid =
+      file.type === "image/jpeg" ||
+      file.type === "image/png" ||
+      file.type === "image/webp";
+    if (!isTypeValid) {
+      message.error("请上传JPG, PNG或WebP类型的图片");
+    }
+    const isSizeTooBig = file.size / 1024 / 1024 > 5;
+    if (isSizeTooBig) {
+      message.error("请上传小于5MB的图片");
+    }
+    return isTypeValid && !isSizeTooBig;
+  };
+
+  const handleUpload = (info) => {
+    if (info.file.status === "uploading") {
+      setUploadLoading(true);
+      return;
+    }
+    if (info.file.status === "done") {
+      const response = info.file.response;
+      const { filename } = response.data;
+      setCoverFile([{ name: filename, thumbUrl: getCoverUrl(filename) }]);
+      setUploadLoading(false);
+    }
+  };
+
+  const getValueFromEvent = (event) => {
+    if (Array.isArray(event)) {
+      return event;
+    }
+    return event && event.fileList;
   };
 
   const uploadButton = (
@@ -83,7 +125,17 @@ const BookEditModal = ({ book, isVisible, closeCallback }) => {
       <Form
         form={form}
         name="editBook"
-        initialValues={book ? { ...book, price: book.price / 100 } : {}}
+        initialValues={
+          book
+            ? {
+                ...book,
+                price: book.price / 100,
+                cover: book.cover
+                  ? [{ name: book.cover, thumbUrl: getCoverUrl(book.cover) }]
+                  : [],
+              }
+            : {}
+        }
         labelCol={{ span: 6 }}
       >
         <Form.Item name="title" label="书名" rules={[{ required: true }]}>
@@ -111,10 +163,30 @@ const BookEditModal = ({ book, isVisible, closeCallback }) => {
             className={styles.inputNumber}
           />
         </Form.Item>
-        <Form.Item name="cover" label="封面">
-          <Upload name="avatar" listType="picture-card">
-            {coverUrl ? (
-              <img src={coverUrl} alt="avatar" style={{ width: "100%" }} />
+        <Form.Item
+          name="cover"
+          label="封面"
+          rules={[{ required: true, message: "请上传封面" }]}
+          valuePropName="fileList"
+          getValueFromEvent={getValueFromEvent}
+        >
+          <Upload
+            name="file"
+            listType="picture-card"
+            action={imageBasePath}
+            beforeUpload={beforeUpload}
+            onChange={handleUpload}
+            maxCount={1}
+            showUploadList={false}
+            headers={{ Authorization: auth.token }}
+            accept="image/jpeg,image/png,image/webp"
+          >
+            {coverFile.length > 0 ? (
+              <img
+                src={coverFile[0].thumbUrl}
+                alt="avatar"
+                style={{ width: "100%" }}
+              />
             ) : (
               uploadButton
             )}

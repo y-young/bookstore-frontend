@@ -2,6 +2,7 @@ import { Badge, Col, Image, InputNumber, List, Typography } from "antd";
 import { Link } from "react-router-dom";
 import { currencyFormat } from "utils/helpers";
 import useCart from "utils/useCart";
+import {getCoverUrl} from "utils/helpers";
 import styles from "./index.less";
 
 const OrderBookItem = ({ item, readOnly = false }) => {
@@ -25,7 +26,7 @@ const OrderBookItem = ({ item, readOnly = false }) => {
       className={styles.orderListItem}
     >
       <List.Item.Meta
-        avatar={<Image src={book.cover} width={60} height={60} />}
+        avatar={<Image src={getCoverUrl(book.cover)} width={60} height={60} />}
         title={
           <Link to={`/books/${book.id}`} className={styles.bookTitle}>
             {book.title}

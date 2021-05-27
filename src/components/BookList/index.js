@@ -13,10 +13,18 @@ import { Link } from "react-router-dom";
 import { currencyFormat } from "utils/helpers";
 import useCart from "utils/useCart";
 import styles from "./index.less";
+import {getCoverUrl} from "utils/helpers";
 
 const BookList = forwardRef(
   (
-    { books, isAdmin = false, onEditBook, onDeleteBook, deleteLoading = false },
+    {
+      loading,
+      books,
+      isAdmin = false,
+      onEditBook,
+      onDeleteBook,
+      deleteLoading = false,
+    },
     ref
   ) => {
     const { addToCart } = useCart();
@@ -96,6 +104,7 @@ const BookList = forwardRef(
     return (
       <>
         <ProList
+          loading={loading}
           dataSource={books}
           rowKey="id"
           className={
@@ -121,7 +130,7 @@ const BookList = forwardRef(
             },
             avatar: {
               render: (_, book) => (
-                <Image src={book.cover} width={100} height={100} />
+                <Image src={getCoverUrl(book.cover)} width={100} height={100} />
               ),
             },
             content: {

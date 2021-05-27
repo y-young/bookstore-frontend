@@ -2,6 +2,7 @@ import { Button, Col, Empty, Image, List, Space } from "antd";
 import { useHistory } from "react-router-dom";
 import { currencyFormat, totalAmount } from "utils/helpers";
 import styles from "./index.less";
+import { getCoverUrl} from "utils/helpers";
 
 const OrderList = ({ orders }) => {
   const history = useHistory();
@@ -30,7 +31,7 @@ const OrderList = ({ orders }) => {
                 <Space>
                   {items.slice(0, 2).map((item) => (
                     <Image
-                      src={item.book.cover}
+                      src={getCoverUrl(item.book.cover)}
                       width={60}
                       height={60}
                       key={item.book.id}

@@ -1,5 +1,6 @@
 import { Card, Image } from "antd";
 import styles from "./index.less";
+import { getCoverUrl} from "utils/helpers";
 
 const BookCoverCard = ({ book }) => {
   return (
@@ -7,7 +8,7 @@ const BookCoverCard = ({ book }) => {
       {!book ? (
         <div className={styles.placeholder} />
       ) : (
-        <Image src={book?.cover} alt={book.title} />
+        <Image src={getCoverUrl(book?.cover)} alt={book.title} />
       )}
     </Card>
   );

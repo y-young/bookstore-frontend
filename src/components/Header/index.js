@@ -58,33 +58,37 @@ const Header = () => {
               <Menu.Item key="orders" icon={<FileDoneOutlined />}>
                 <Link to="/orders">订单</Link>
               </Menu.Item>
-              <Menu.SubMenu
-                key="statistics"
-                title="统计"
-                icon={<BarChartOutlined />}
-              >
-                <Menu.Item key="statistics-books">
-                  <Link to="/statistics/books">书籍销量榜</Link>
-                </Menu.Item>
-                <Menu.Item key="statistics-users">
-                  <Link to="/statistics/users">用户消费榜</Link>
-                </Menu.Item>
-              </Menu.SubMenu>
-              <Menu.SubMenu
-                key="management"
-                title="管理"
-                icon={<ControlOutlined />}
-              >
-                <Menu.Item key="book-management">
-                  <Link to="/manage/books">书籍管理</Link>
-                </Menu.Item>
-                <Menu.Item key="user-management">
-                  <Link to="/manage/users">用户管理</Link>
-                </Menu.Item>
-                <Menu.Item key="order-management">
-                  <Link to="/manage/orders">订单管理</Link>
-                </Menu.Item>
-              </Menu.SubMenu>
+              {auth.isAdmin() && (
+                <Menu.SubMenu
+                  key="statistics"
+                  title="统计"
+                  icon={<BarChartOutlined />}
+                >
+                  <Menu.Item key="statistics-books">
+                    <Link to="/statistics/books">书籍销量榜</Link>
+                  </Menu.Item>
+                  <Menu.Item key="statistics-users">
+                    <Link to="/statistics/users">用户消费榜</Link>
+                  </Menu.Item>
+                </Menu.SubMenu>
+              )}
+              {auth.isAdmin() && (
+                <Menu.SubMenu
+                  key="management"
+                  title="管理"
+                  icon={<ControlOutlined />}
+                >
+                  <Menu.Item key="book-management">
+                    <Link to="/manage/books">书籍管理</Link>
+                  </Menu.Item>
+                  <Menu.Item key="user-management">
+                    <Link to="/manage/users">用户管理</Link>
+                  </Menu.Item>
+                  <Menu.Item key="order-management">
+                    <Link to="/manage/orders">订单管理</Link>
+                  </Menu.Item>
+                </Menu.SubMenu>
+              )}
             </Menu>
           </Col>
           <Col span={6} offset={2}>

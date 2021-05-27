@@ -29,11 +29,16 @@ const useProvideAuth = () => {
     setToken();
   };
 
+  const isAdmin = () => {
+    return user && user.role === "admin";
+  };
+
   return {
     user,
     token,
     signin,
     signout,
+    isAdmin,
   };
 };
 

@@ -147,6 +147,9 @@ const BookEditModal = ({ book, isVisible, closeCallback }) => {
         <Form.Item name="isbn" label="ISBN">
           <Input placeholder="ISBN" />
         </Form.Item>
+        <Form.Item name="type" label="分类">
+          <Input placeholder="分类" />
+        </Form.Item>
         <Form.Item name="price" label="定价" rules={[{ required: true }]}>
           <InputNumber
             placeholder="定价"

@@ -1,43 +1,15 @@
 import { Column } from "@ant-design/charts";
+import useRequest from "@umijs/use-request";
 
 const BookStatistics = () => {
-  const data = [
-    {
-      type: "科幻小说",
-      sales: 61,
+  const { data, loading } = useRequest("/books/sales", {
+    initialData: [],
+    formatResult: (response) => {
+      return response.data.map((item) => ({ ...item.book, sales: item.sales }));
     },
-    {
-      type: "计算机",
-      sales: 52,
-    },
-    {
-      type: "外国文学",
-      sales: 38,
-    },
-    {
-      type: "音乐",
-      sales: 38,
-    },
-    {
-      type: "艺术",
-      sales: 28,
-    },
-    {
-      type: "当代文学",
-      sales: 27,
-    },
-    {
-      type: "物理学",
-      sales: 15,
-    },
-    {
-      type: "社会科学",
-      sales: 10,
-    },
-  ];
+  });
   const config = {
-    data: data,
-    xField: "type",
+    xField: "title",
     yField: "sales",
     label: {
       position: "middle",
@@ -46,12 +18,25 @@ const BookStatistics = () => {
         opacity: 0.6,
       },
     },
+    xAxis: {
+      label: {
+        autoHide: false,
+      },
+      title: {
+        text: "书名",
+      },
+    },
+    yAxis: {
+      title: {
+        text: "销量(本)",
+      },
+    },
     meta: {
-      type: { alias: "类别" },
+      title: { alias: "书名" },
       sales: { alias: "销量" },
     },
   };
-  return <Column {...config} />;
+  return <Column data={data} loading={loading} {...config} />;
 };
 
 export default BookStatistics;

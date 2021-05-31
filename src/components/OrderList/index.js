@@ -1,8 +1,7 @@
 import { Button, Col, Empty, Image, List, Space } from "antd";
 import { useHistory } from "react-router-dom";
-import { currencyFormat, totalAmount } from "utils/helpers";
+import { currencyFormat, getCoverUrl } from "utils/helpers";
 import styles from "./index.less";
-import { getCoverUrl} from "utils/helpers";
 
 const OrderList = ({ orders }) => {
   const history = useHistory();
@@ -13,7 +12,7 @@ const OrderList = ({ orders }) => {
       dataSource={orders}
       rowKey="id"
       renderItem={(order) => {
-        const { id, items, total, time } = order;
+        const { id, items, total, totalAmount, time } = order;
         return (
           <List.Item
             actions={[
@@ -43,7 +42,7 @@ const OrderList = ({ orders }) => {
                 </Space>
               }
               title={`时间：${new Date(time).toLocaleString()}`}
-              description={`${totalAmount(items)} 件商品`}
+              description={`${totalAmount} 件商品`}
               className={styles.orderBookItems}
             />
             <Col flex="1 1 50px" className={styles.orderTotal}>

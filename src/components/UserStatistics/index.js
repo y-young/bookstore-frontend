@@ -1,4 +1,5 @@
 import { currencyFormat } from "@/utils/helpers";
+import useRequest from "@umijs/use-request";
 import { Table } from "antd";
 
 const columns = [
@@ -10,54 +11,38 @@ const columns = [
     },
   },
   {
+    title: "ID",
+    dataIndex: ["user", "id"],
+    key: "id",
+  },
+  {
     title: "用户名",
-    dataIndex: "username",
+    dataIndex: ["user", "username"],
     key: "username",
   },
   {
     title: "订单数",
-    dataIndex: "orders",
-    key: "orders",
+    dataIndex: "orderCount",
+    key: "orderCount",
   },
   {
     title: "购书数",
-    dataIndex: "books",
-    key: "books",
+    dataIndex: "bookCount",
+    key: "bookCount",
   },
   {
     title: "消费金额",
-    key: "amount",
-    dataIndex: "amount",
+    key: "total",
+    dataIndex: "total",
     render: (text) => currencyFormat(text),
   },
 ];
 
-const data = [
-  {
-    id: 1,
-    username: "Jim Green",
-    orders: 42,
-    books: 879,
-    amount: 3979829,
-  },
-  {
-    id: 2,
-    username: "John Brown",
-    orders: 32,
-    books: 108,
-    amount: 43323.89,
-  },
-  {
-    id: 3,
-    username: "Joe Black",
-    orders: 2,
-    books: 5,
-    amount: 323.1,
-  },
-];
-
 const UserStatistics = () => {
-  return <Table columns={columns} dataSource={data} rowKey="id" />;
+  const { data, loading } = useRequest("/users/rank");
+  return (
+    <Table loading={loading} columns={columns} dataSource={data} rowKey="id" />
+  );
 };
 
 export default UserStatistics;

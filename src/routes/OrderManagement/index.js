@@ -1,12 +1,12 @@
-import books from "@/assets/books";
-import { DatePicker, Divider, Input } from "antd";
+import useRequest from "@umijs/use-request";
+import { DatePicker, Divider, Input, Spin } from "antd";
 import OrderList from "components/OrderList";
 import PageHeader from "components/PageHeader";
 
 const { RangePicker } = DatePicker;
 
 const OrderManagement = () => {
-  const items = books;
+  const { data, loading } = useRequest("/orders", { initialData: [] });
 
   return (
     <>
@@ -15,7 +15,9 @@ const OrderManagement = () => {
         <RangePicker />
         <Divider />
       </PageHeader>
-      <OrderList books={items} />
+      <Spin spinning={loading}>
+        <OrderList orders={data} />
+      </Spin>
     </>
   );
 };

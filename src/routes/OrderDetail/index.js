@@ -29,7 +29,7 @@ const OrderDetail = () => {
         </Col>
       </Row>
       <Divider />
-      <OrderBookList readOnly items={data?.items} />
+      <OrderBookList readOnly items={data?.items} amount={data?.totalAmount} />
       <Row justify="end">
         <Col>
           <Space>

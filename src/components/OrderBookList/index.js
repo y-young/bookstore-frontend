@@ -3,7 +3,7 @@ import OrderBookItem from "components/OrderBookItem";
 import { useHistory } from "react-router-dom";
 import { currencyFormat, totalSum } from "utils/helpers";
 
-const OrderBookList = ({ items, readOnly = false }) => {
+const OrderBookList = ({ items, amount, readOnly = false }) => {
   const history = useHistory();
 
   return (
@@ -12,9 +12,9 @@ const OrderBookList = ({ items, readOnly = false }) => {
       dataSource={items}
       footer={
         <>
-          {items?.length > 0 && (
+          {amount > 0 && (
             <Row justify="space-between">
-              <p>共 {items.length} 件商品</p>
+              <p>共 {amount} 件商品</p>
               <Typography.Title level={3}>
                 总计 {currencyFormat(totalSum(items))}
               </Typography.Title>

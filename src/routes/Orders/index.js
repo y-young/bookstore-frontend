@@ -11,6 +11,10 @@ const { RangePicker } = DatePicker;
 const Orders = () => {
   const items = books;
   const { data, loading } = useRequest("/orders/my", { initialData: [] });
+  const { data: statistics, loading: statisticsLoading } = useRequest(
+    "/orders/my/statistics",
+    { initialData: [] }
+  );
 
   return (
     <>
@@ -18,7 +22,7 @@ const Orders = () => {
         <Input.Search placeholder="搜索书籍" />
         <RangePicker />
       </PageHeader>
-      <Spin spinning={loading}>
+      <Spin spinning={loading || statisticsLoading}>
         <Row gutter={16} className={styles.statistics}>
           <Col span={8}>
             <Statistic title="订单数量" value={items.length} />
@@ -43,7 +47,7 @@ const Orders = () => {
             <Divider type="vertical" className={styles.divider} />
           </Col>
           <Col span={3}>
-            <BookTypeStatistics />
+            <BookTypeStatistics data={statistics} />
           </Col>
         </Row>
       </Spin>

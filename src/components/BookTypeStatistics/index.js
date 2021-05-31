@@ -1,16 +1,17 @@
 import { Col, Row } from "antd";
+import React from "react";
 import styles from "./index.less";
 
-const BookTypeStatistics = () => {
+const BookTypeStatistics = ({ data }) => {
   return (
     <>
       <Row gutter={8} className={styles.bookTypeStatistics}>
-        <Col span={18}>外国文学</Col>
-        <Col span={6}>10</Col>
-        <Col span={18}>科幻小说</Col>
-        <Col span={6}>23</Col>
-        <Col span={18}>计算机</Col>
-        <Col span={6}>3</Col>
+        {data.map((item) => (
+          <React.Fragment key={item.type}>
+            <Col span={18}>{item.type}</Col>
+            <Col span={6}>{item.count}</Col>
+          </React.Fragment>
+        ))}
       </Row>
     </>
   );

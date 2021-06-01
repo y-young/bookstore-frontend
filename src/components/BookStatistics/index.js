@@ -1,8 +1,7 @@
 import { Column } from "@ant-design/charts";
 import useRequest from "@umijs/use-request";
 import { useEffect } from "react";
-
-const baseApiUrl = "/books/sales";
+import { getApiUrlWithDateRange } from "utils/helpers";
 
 const BookStatistics = ({ startDate, endDate }) => {
   const { run, data } = useRequest(
@@ -20,13 +19,7 @@ const BookStatistics = ({ startDate, endDate }) => {
   );
 
   useEffect(() => {
-    let apiUrl;
-    if (startDate && endDate) {
-      apiUrl = `${baseApiUrl}?start=${startDate}&end=${endDate}`;
-    } else {
-      apiUrl = baseApiUrl;
-    }
-    run(apiUrl);
+    run(getApiUrlWithDateRange("/books/sales", startDate, endDate));
   }, [startDate, endDate, run]);
 
   const config = {

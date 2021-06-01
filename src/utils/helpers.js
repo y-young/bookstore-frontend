@@ -23,4 +23,12 @@ export const imageBasePath = "http://localhost:8080/api/books/cover/";
 
 export const getCoverUrl = (cover) => {
   return imageBasePath + cover;
-}
+};
+
+export const getApiUrlWithDateRange = (baseUrl, startDate, endDate) => {
+  if (startDate && endDate) {
+    return `${baseUrl}?start=${startDate}&end=${endDate}`;
+  } else {
+    return baseUrl;
+  }
+};

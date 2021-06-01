@@ -1,6 +1,7 @@
-import { currencyFormat } from "@/utils/helpers";
 import useRequest from "@umijs/use-request";
 import { Table } from "antd";
+import { useEffect } from "react";
+import { currencyFormat, getApiUrlWithDateRange } from "utils/helpers";
 
 const columns = [
   {
@@ -38,10 +39,20 @@ const columns = [
   },
 ];
 
-const UserStatistics = () => {
-  const { data, loading } = useRequest("/users/rank");
+const UserStatistics = ({ startDate, endDate }) => {
+  const { run, data, loading } = useRequest((url) => url, { manual: true });
+
+  useEffect(() => {
+    run(getApiUrlWithDateRange("/users/rank", startDate, endDate));
+  }, [startDate, endDate, run]);
+
   return (
-    <Table loading={loading} columns={columns} dataSource={data} rowKey="id" />
+    <Table
+      loading={loading}
+      columns={columns}
+      dataSource={data}
+      rowKey={(record) => record.user.id}
+    />
   );
 };
 

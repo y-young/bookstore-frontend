@@ -57,7 +57,7 @@ const Statistics = () => {
           <BookStatistics startDate={startDate} endDate={endDate} />
         </Route>
         <Route path="/statistics/users">
-          <UserStatistics />
+          <UserStatistics startDate={startDate} endDate={endDate} />
         </Route>
       </Switch>
     </>

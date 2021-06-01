@@ -2,6 +2,7 @@ import BookStatistics from "@/components/BookStatistics";
 import UserStatistics from "@/components/UserStatistics";
 import { Col, DatePicker, Row, Statistic } from "antd";
 import PageHeader from "components/PageHeader";
+import { useState } from "react";
 import { Switch } from "react-router-dom";
 import { Route } from "react-router-dom/cjs/react-router-dom.min";
 import styles from "./index.less";
@@ -9,6 +10,20 @@ import styles from "./index.less";
 const { RangePicker } = DatePicker;
 
 const Statistics = () => {
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+
+  const onDateRangeChange = (_, dateStrings) => {
+    const [start, end] = dateStrings;
+    if (!start || !end) {
+      setStartDate(null);
+      setEndDate(null);
+      return;
+    }
+    setStartDate(start);
+    setEndDate(end);
+  };
+
   return (
     <>
       <PageHeader
@@ -19,7 +34,7 @@ const Statistics = () => {
           </Switch>
         }
       >
-        <RangePicker />
+        <RangePicker onChange={onDateRangeChange} />
       </PageHeader>
       <Row gutter={16} className={styles.statistics}>
         <Col span={8}>
@@ -39,7 +54,7 @@ const Statistics = () => {
       </Row>
       <Switch>
         <Route path="/statistics/books">
-          <BookStatistics />
+          <BookStatistics startDate={startDate} endDate={endDate} />
         </Route>
         <Route path="/statistics/users">
           <UserStatistics />

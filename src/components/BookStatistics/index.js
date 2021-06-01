@@ -1,13 +1,34 @@
 import { Column } from "@ant-design/charts";
 import useRequest from "@umijs/use-request";
+import { useEffect } from "react";
 
-const BookStatistics = () => {
-  const { data, loading } = useRequest("/books/sales", {
-    initialData: [],
-    formatResult: (response) => {
-      return response.data.map((item) => ({ ...item.book, sales: item.sales }));
+const baseApiUrl = "/books/sales";
+
+const BookStatistics = ({ startDate, endDate }) => {
+  const { run, data } = useRequest(
+    (url) => url,
+    {
+      initialData: [],
+      formatResult: (response) => {
+        return response.data.map((item) => ({
+          ...item.book,
+          sales: item.sales,
+        }));
+      },
     },
-  });
+    { manual: true }
+  );
+
+  useEffect(() => {
+    let apiUrl;
+    if (startDate && endDate) {
+      apiUrl = `${baseApiUrl}?start=${startDate}&end=${endDate}`;
+    } else {
+      apiUrl = baseApiUrl;
+    }
+    run(apiUrl);
+  }, [startDate, endDate, run]);
+
   const config = {
     xField: "title",
     yField: "sales",
@@ -36,7 +57,7 @@ const BookStatistics = () => {
       sales: { alias: "销量" },
     },
   };
-  return <Column data={data} loading={loading} {...config} />;
+  return <Column data={data} {...config} />;
 };
 
 export default BookStatistics;

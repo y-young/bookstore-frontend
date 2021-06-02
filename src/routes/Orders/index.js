@@ -4,23 +4,48 @@ import { Col, DatePicker, Divider, Input, Row, Spin, Statistic } from "antd";
 import BookTypeStatistics from "components/BookTypeStatistics";
 import OrderList from "components/OrderList";
 import PageHeader from "components/PageHeader";
+import { getApiUrlWithDateRange } from "utils/helpers";
 import styles from "./index.less";
 
 const { RangePicker } = DatePicker;
 
 const Orders = () => {
   const items = books;
-  const { data, loading } = useRequest("/orders/my", { initialData: [] });
-  const { data: statistics, loading: statisticsLoading } = useRequest(
-    "/orders/my/statistics",
+  const {
+    run: fetchOrders,
+    data,
+    loading,
+  } = useRequest(
+    (startDate, endDate) =>
+      getApiUrlWithDateRange("/orders/my", startDate, endDate),
     { initialData: [] }
   );
+  const {
+    run: fetchTypeStatistics,
+    data: statistics,
+    loading: statisticsLoading,
+  } = useRequest(
+    (startDate, endDate) =>
+      getApiUrlWithDateRange("/orders/my/statistics", startDate, endDate),
+    { initialData: [] }
+  );
+
+  const onDateRangeChange = async (_, dateStrings) => {
+    const [start, end] = dateStrings;
+    if (!start || !end) {
+      await fetchOrders();
+      await fetchTypeStatistics();
+      return;
+    }
+    await fetchOrders(start, end);
+    await fetchTypeStatistics(start, end);
+  };
 
   return (
     <>
       <PageHeader title="订单">
         <Input.Search placeholder="搜索书籍" />
-        <RangePicker />
+        <RangePicker onChange={onDateRangeChange} />
       </PageHeader>
       <Spin spinning={loading || statisticsLoading}>
         <Row gutter={16} className={styles.statistics}>

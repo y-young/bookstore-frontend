@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { currencyFormat, getCoverUrl } from "utils/helpers";
 import styles from "./index.less";
 
-const OrderList = ({ orders }) => {
+const OrderList = ({ orders, loading }) => {
   const history = useHistory();
 
   return (
@@ -11,6 +11,7 @@ const OrderList = ({ orders }) => {
       itemLayout="horizontal"
       dataSource={orders}
       rowKey="id"
+      loading={loading}
       renderItem={(order) => {
         const { id, items, total, totalAmount, time } = order;
         return (

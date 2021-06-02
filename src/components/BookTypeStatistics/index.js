@@ -1,10 +1,10 @@
-import { Col, Row } from "antd";
+import { Col, Row, Skeleton } from "antd";
 import React from "react";
 import styles from "./index.less";
 
-const BookTypeStatistics = ({ data }) => {
+const BookTypeStatistics = ({ data, loading }) => {
   return (
-    <>
+    <Skeleton loading={loading} active>
       <Row gutter={8} className={styles.bookTypeStatistics}>
         {data.map((item) => (
           <React.Fragment key={item.type}>
@@ -13,7 +13,7 @@ const BookTypeStatistics = ({ data }) => {
           </React.Fragment>
         ))}
       </Row>
-    </>
+    </Skeleton>
   );
 };
 

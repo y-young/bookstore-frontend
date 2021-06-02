@@ -1,5 +1,5 @@
 import useRequest from "@umijs/use-request";
-import { DatePicker, Divider, Input, Spin } from "antd";
+import { DatePicker, Divider, Input } from "antd";
 import OrderList from "components/OrderList";
 import PageHeader from "components/PageHeader";
 import { getApiUrlWithDateRange } from "utils/helpers";
@@ -9,7 +9,7 @@ const { RangePicker } = DatePicker;
 const OrderManagement = () => {
   const { run, data, loading } = useRequest(
     (startDate, endDate) =>
-      getApiUrlWithDateRange("/orders/", startDate, endDate),
+      getApiUrlWithDateRange("/orders", startDate, endDate),
     { initialData: [] }
   );
 
@@ -29,9 +29,7 @@ const OrderManagement = () => {
         <RangePicker onChange={onDateRangeChange} />
         <Divider />
       </PageHeader>
-      <Spin spinning={loading}>
-        <OrderList orders={data} />
-      </Spin>
+      <OrderList orders={data} loading={loading} />
     </>
   );
 };

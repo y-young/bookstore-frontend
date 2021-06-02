@@ -43,7 +43,7 @@ const UserStatistics = ({ startDate, endDate }) => {
   const { run, data, loading } = useRequest((url) => url, { manual: true });
 
   useEffect(() => {
-    run(getApiUrlWithDateRange("/users/rank", startDate, endDate));
+    run(getApiUrlWithDateRange("/users/statistics", startDate, endDate));
   }, [startDate, endDate, run]);
 
   return (

@@ -32,3 +32,21 @@ export const getApiUrlWithDateRange = (baseUrl, startDate, endDate) => {
     return baseUrl;
   }
 };
+
+export const getPaginatedApiUrl = (baseUrl, currentPage, pageSize) => {
+  return `${baseUrl}?page=${currentPage - 1}&size=${pageSize}`;
+};
+
+export const formatPaginatedResult = (response) => {
+  const { data } = response;
+  if (!data) {
+    return {
+      list: [],
+      total: 0,
+    };
+  }
+  return {
+    list: data.content,
+    total: data.totalElements,
+  };
+};

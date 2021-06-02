@@ -10,10 +10,9 @@ import BookEditModal from "components/BookEditModal";
 import StockStatus from "components/StockStatus";
 import { forwardRef, useImperativeHandle, useState } from "react";
 import { Link } from "react-router-dom";
-import { currencyFormat } from "utils/helpers";
+import { currencyFormat, getCoverUrl } from "utils/helpers";
 import useCart from "utils/useCart";
 import styles from "./index.less";
-import {getCoverUrl} from "utils/helpers";
 
 const BookList = forwardRef(
   (
@@ -24,6 +23,7 @@ const BookList = forwardRef(
       onEditBook,
       onDeleteBook,
       deleteLoading = false,
+      pagination,
     },
     ref
   ) => {
@@ -70,9 +70,12 @@ const BookList = forwardRef(
 
     const renderUserActions = (book) => [
       book.stock === 0 ? (
-        <Button icon={<BellOutlined />}>到货通知</Button>
+        <Button key="outOfStock" icon={<BellOutlined />}>
+          到货通知
+        </Button>
       ) : (
         <Button
+          key="addToCart"
           type="primary"
           icon={<ShoppingCartOutlined />}
           onClick={() => add2Cart(book)}
@@ -106,6 +109,7 @@ const BookList = forwardRef(
         <ProList
           loading={loading}
           dataSource={books}
+          pagination={pagination}
           rowKey="id"
           className={
             isAdmin ? [styles.bookList, styles.withOption] : styles.bookList

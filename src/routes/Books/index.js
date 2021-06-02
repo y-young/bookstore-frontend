@@ -2,23 +2,18 @@ import useRequest from "@umijs/use-request";
 import { Input, Spin } from "antd";
 import BookList from "components/BookList";
 import PageHeader from "components/PageHeader";
-import { useState } from "react";
+import { formatPaginatedResult, getPaginatedApiUrl } from "utils/helpers";
 
 const Books = () => {
-  const { data, loading } = useRequest("/books", {
-    onSuccess: (books) => setBooks(books),
-  });
-  const [books, setBooks] = useState([]);
+  const { run, data, loading, pagination } = useRequest(
+    ({ current, pageSize }, keyword) =>
+      getPaginatedApiUrl("/books", current, pageSize) +
+      `&keyword=${keyword || ""}`,
+    { formatResult: formatPaginatedResult, paginated: true }
+  );
 
   const onSearch = (keyword) => {
-    if (!keyword) {
-      setBooks(data);
-    }
-    setBooks(
-      data.filter(
-        (book) => book.title.includes(keyword) || book.author.includes(keyword)
-      )
-    );
+    run(pagination, keyword);
   };
 
   return (
@@ -27,7 +22,7 @@ const Books = () => {
         <Input.Search placeholder="搜索书籍" onSearch={onSearch} />
       </PageHeader>
       <Spin spinning={loading}>
-        <BookList books={books} />
+        <BookList books={data?.list} pagination={pagination} />
       </Spin>
     </>
   );

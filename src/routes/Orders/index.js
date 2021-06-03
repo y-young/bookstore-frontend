@@ -3,12 +3,14 @@ import { Col, DatePicker, Divider, Input, Row, Statistic } from "antd";
 import BookTypeStatistics from "components/BookTypeStatistics";
 import OrderList from "components/OrderList";
 import PageHeader from "components/PageHeader";
+import { useState } from "react";
 import { getApiUrlWithDateRange } from "utils/helpers";
 import styles from "./index.less";
 
 const { RangePicker } = DatePicker;
 
 const Orders = () => {
+  const [bookTitle, setBookTitle] = useState("");
   const {
     run: fetchOrderStatistics,
     data: orderStatistics,
@@ -24,8 +26,9 @@ const Orders = () => {
     loading: ordersLoading,
   } = useRequest(
     (startDate, endDate) =>
-      getApiUrlWithDateRange("/orders/my", startDate, endDate),
-    { initialData: [] }
+      getApiUrlWithDateRange("/orders/my", startDate, endDate) +
+      `&bookTitle=${bookTitle}`,
+    { initialData: [], refreshDeps: [bookTitle] }
   );
   const {
     run: fetchBookStatistics,
@@ -53,7 +56,10 @@ const Orders = () => {
   return (
     <>
       <PageHeader title="订单">
-        <Input.Search placeholder="搜索书籍" />
+        <Input.Search
+          placeholder="搜索书籍"
+          onSearch={(keyword) => setBookTitle(keyword)}
+        />
         <RangePicker onChange={onDateRangeChange} />
       </PageHeader>
       <Row gutter={16} className={styles.statistics}>

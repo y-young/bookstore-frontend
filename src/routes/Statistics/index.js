@@ -54,7 +54,7 @@ const Statistics = () => {
         <Col span={8}>
           <Statistic
             title="书籍销量"
-            value={data?.bookCount}
+            value={data?.bookCount ? data.bookCount : 0} // Fix NULL value
             loading={loading}
           />
         </Col>

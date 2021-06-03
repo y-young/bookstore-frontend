@@ -1,10 +1,12 @@
 import BookStatistics from "@/components/BookStatistics";
 import UserStatistics from "@/components/UserStatistics";
+import useRequest from "@umijs/use-request";
 import { Col, DatePicker, Row, Statistic } from "antd";
 import PageHeader from "components/PageHeader";
 import { useState } from "react";
 import { Switch } from "react-router-dom";
 import { Route } from "react-router-dom/cjs/react-router-dom.min";
+import { getApiUrlWithDateRange } from "utils/helpers";
 import styles from "./index.less";
 
 const { RangePicker } = DatePicker;
@@ -12,16 +14,21 @@ const { RangePicker } = DatePicker;
 const Statistics = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const { run, data, loading } = useRequest((startDate, endDate) =>
+    getApiUrlWithDateRange("/orders/statistics", startDate, endDate)
+  );
 
   const onDateRangeChange = (_, dateStrings) => {
     const [start, end] = dateStrings;
     if (!start || !end) {
       setStartDate(null);
       setEndDate(null);
+      run();
       return;
     }
     setStartDate(start);
     setEndDate(end);
+    run(start, end);
   };
 
   return (
@@ -38,17 +45,26 @@ const Statistics = () => {
       </PageHeader>
       <Row gutter={16} className={styles.statistics}>
         <Col span={8}>
-          <Statistic title="订单数量" value={2897} />
+          <Statistic
+            title="订单数量"
+            value={data?.orderCount}
+            loading={loading}
+          />
         </Col>
         <Col span={8}>
-          <Statistic title="书籍销量" value={11278} />
+          <Statistic
+            title="书籍销量"
+            value={data?.bookCount}
+            loading={loading}
+          />
         </Col>
         <Col span={8}>
           <Statistic
             title="销售总金额"
             prefix={"￥"}
-            value={11271688}
+            value={data?.total / 100}
             precision={2}
+            loading={loading}
           />
         </Col>
       </Row>

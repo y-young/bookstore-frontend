@@ -22,7 +22,7 @@ import Register from "routes/Register";
 import Settings from "routes/Settings";
 import Statistics from "routes/Statistics";
 import UserManagement from "routes/UserManagement";
-import request from "umi-request";
+import { extend } from "umi-request";
 import styles from "./App.less";
 
 const App = () => {
@@ -35,33 +35,46 @@ const App = () => {
           const headers = token
             ? { Authorization: token.replaceAll('"', "") } // Remove double quotes
             : {};
+          const request = extend({
+            prefix,
+            headers,
+            errorHandler: async (error) => {
+              const { response } = error;
+              if (!response) {
+                message.error("请求超时，请重试");
+                return;
+              }
+              const body = await response.json();
+              const { status } = response;
+              if (status < 400) {
+                return response;
+              }
+              switch (status) {
+                case 500:
+                  message.error("服务器错误");
+                  break;
+                case 401:
+                  message.warn("请先登录");
+                  window.location.href = "/login";
+                  break;
+                case 404:
+                  message.error("请求的资源未找到");
+                  window.location.href = "/";
+                  break;
+                default:
+                  message.error(body.message);
+              }
+              throw error;
+            },
+          });
           if (typeof param === "string") {
-            return request(param, { prefix, headers });
+            return request(param);
           }
           if (typeof param === "object") {
-            return request(param.url, { ...param, prefix, headers });
+            return request(param.url, { ...param });
           }
         },
         formatResult: (response) => response.data,
-        onError: async (error) => {
-          const body = await error.response.json();
-          const { status } = error.response;
-          switch (status) {
-            case 500:
-              message.error("服务器错误");
-              break;
-            case 401:
-              message.warn("请先登录");
-              window.location.href = "/login";
-              break;
-            case 404:
-              message.error("请求的资源未找到");
-              window.location.href = "/";
-              break;
-            default:
-              message.error(body.message);
-          }
-        },
       }}
     >
       <Router>

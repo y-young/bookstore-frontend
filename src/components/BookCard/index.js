@@ -1,5 +1,6 @@
 import { Card } from "antd";
 import { useHistory } from "react-router-dom";
+import { getCoverUrl } from "utils/helpers";
 
 const BookCard = ({ book }) => {
   const history = useHistory();
@@ -10,7 +11,7 @@ const BookCard = ({ book }) => {
       cover={
         <img
           alt={book.title}
-          src={book.cover}
+          src={getCoverUrl(book.cover)}
           style={{ borderRadius: "10px" }}
         />
       }

@@ -32,7 +32,7 @@ const BookManagement = () => {
   const { run: batchDeleteBook, loading: batchDeleteLoading } = useRequest(
     (data) => ({
       method: "post",
-      url: "/books/batchDelete",
+      url: "/books/delete",
       data,
     }),
     {
@@ -58,8 +58,14 @@ const BookManagement = () => {
 
   const onBatchDeleteBooks = async () => {
     const bookIds = bookListRef.current.getSelectedBookIds();
+    if (!bookIds || bookIds.length === 0) {
+      return;
+    }
+    const clear = bookListRef.current.clearSelection;
+    const close = message.loading("正在提交...");
     await batchDeleteBook(bookIds);
-    bookListRef.current.clearSelection();
+    close();
+    clear();
   };
 
   const onAddBook = (_, newBook) => {

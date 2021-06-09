@@ -1,9 +1,14 @@
 import { Badge } from "antd";
 
-const StockStatus = ({ stock }) => {
+const StockStatus = ({ stock, deleted }) => {
   return (
     <>
-      {stock > 0 ? (
+      {deleted ? (
+        <>
+          <Badge color="gray" />
+          已下架
+        </>
+      ) : stock > 0 ? (
         <>
           <Badge color="green" />
           有货，库存 {stock} 件

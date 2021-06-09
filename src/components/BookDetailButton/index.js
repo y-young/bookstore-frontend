@@ -28,7 +28,11 @@ const BookDetailButton = ({ book }) => {
         <Skeleton.Button active={true} size="large" />
       ) : (
         <>
-          {book.stock === 0 ? (
+          {book.deleted ? (
+            <Button size="large" disabled>
+              已下架
+            </Button>
+          ) : book.stock === 0 ? (
             <Button size="large" icon={<BellOutlined />}>
               到货通知
             </Button>

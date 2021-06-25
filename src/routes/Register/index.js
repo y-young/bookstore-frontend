@@ -1,5 +1,6 @@
 import useRequest from "@umijs/use-request";
 import { Button, Card, Col, Form, Input, message, Row, Typography } from "antd";
+import debounce from "debounce-promise";
 import { Link, useHistory } from "react-router-dom";
 
 const layout = {
@@ -23,6 +24,17 @@ const Register = () => {
       },
     }
   );
+  const { run: checkUsername } = useRequest(
+    (username) => ({
+      method: "post",
+      url: "/users/register/checkUsername",
+      data: username,
+    }),
+    {
+      manual: true,
+      initialData: true,
+    }
+  );
 
   return (
     <Row justify="center">
@@ -33,7 +45,24 @@ const Register = () => {
             <Form.Item
               name="username"
               label="用户名"
-              rules={[{ required: true }]}
+              hasFeedback
+              validateFirst
+              rules={[
+                { required: true },
+                {
+                  required: true,
+                  validator: debounce(async (_, value) => {
+                    if (!value) {
+                      return Promise.resolve();
+                    }
+                    const result = await checkUsername(value);
+                    if (result) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(new Error("用户名已存在"));
+                  }, 300),
+                },
+              ]}
             >
               <Input placeholder="用户名" />
             </Form.Item>

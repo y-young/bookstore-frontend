@@ -38,6 +38,7 @@ const App = () => {
           const request = extend({
             prefix,
             headers,
+            mode: "cors",
             errorHandler: async (error) => {
               const { response } = error;
               if (!response) {

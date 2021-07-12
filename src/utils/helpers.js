@@ -1,3 +1,5 @@
+const apiBasePath = "http://localhost:8080";
+
 export const currencyFormat = (amount) => {
   amount = amount / 100;
   const decimal = amount % 1;
@@ -19,22 +21,31 @@ export const totalAmount = (items) => {
   return items.map((item) => item.amount).reduce((prev, curr) => prev + curr);
 };
 
-export const imageBasePath = "http://localhost:8080/api/books/cover/";
+export const imageBasePath = apiBasePath + "/api/books/cover/";
 
 export const getCoverUrl = (cover) => {
   return imageBasePath + cover;
 };
 
 export const getApiUrlWithDateRange = (baseUrl, startDate, endDate) => {
+  const url = new URL(baseUrl, apiBasePath);
+  const params = url.searchParams;
   if (startDate && endDate) {
-    return `${baseUrl}?start=${startDate}&end=${endDate}`;
+    params.append("start", startDate);
+    params.append("end", endDate);
   } else {
-    return baseUrl + "?start=&end=";
+    params.append("start", "");
+    params.append("end", "");
   }
+  return `${url.pathname}?${params.toString()}`;
 };
 
 export const getPaginatedApiUrl = (baseUrl, currentPage, pageSize) => {
-  return `${baseUrl}?page=${currentPage - 1}&size=${pageSize}`;
+  const url = new URL(baseUrl, apiBasePath);
+  const params = url.searchParams;
+  params.append("page", currentPage - 1);
+  params.append("size", pageSize);
+  return `${url.pathname}?${params.toString()}`;
 };
 
 export const formatPaginatedResult = (response) => {

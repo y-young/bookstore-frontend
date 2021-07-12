@@ -3,26 +3,38 @@ import { DatePicker, Divider, Input } from "antd";
 import OrderList from "components/OrderList";
 import PageHeader from "components/PageHeader";
 import { useState } from "react";
-import { getApiUrlWithDateRange } from "utils/helpers";
+import {
+  formatPaginatedResult,
+  getApiUrlWithDateRange,
+  getPaginatedApiUrl,
+} from "utils/helpers";
 
 const { RangePicker } = DatePicker;
 
 const OrderManagement = () => {
   const [bookTitle, setBookTitle] = useState("");
-  const { run, data, loading } = useRequest(
-    (startDate, endDate) =>
-      getApiUrlWithDateRange("/orders", startDate, endDate) +
-      `&bookTitle=${bookTitle}`,
-    { initialData: [], refreshDeps: [bookTitle] }
+  const { pagination, run, data, loading } = useRequest(
+    ({ current, pageSize }, startDate, endDate) =>
+      getApiUrlWithDateRange(
+        getPaginatedApiUrl("/orders", current, pageSize),
+        startDate,
+        endDate
+      ) + `&bookTitle=${bookTitle}`,
+    {
+      initialData: [],
+      refreshDeps: [bookTitle],
+      formatResult: formatPaginatedResult,
+      paginated: true,
+    }
   );
 
   const onDateRangeChange = async (_, dateStrings) => {
     const [start, end] = dateStrings;
     if (!start || !end) {
-      await run();
+      await run(pagination);
       return;
     }
-    await run(start, end);
+    await run(pagination, start, end);
   };
 
   return (
@@ -35,7 +47,11 @@ const OrderManagement = () => {
         <RangePicker onChange={onDateRangeChange} />
         <Divider />
       </PageHeader>
-      <OrderList orders={data} loading={loading} />
+      <OrderList
+        orders={data?.list}
+        loading={loading}
+        pagination={pagination}
+      />
     </>
   );
 };

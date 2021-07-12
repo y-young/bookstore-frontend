@@ -4,7 +4,11 @@ import BookTypeStatistics from "components/BookTypeStatistics";
 import OrderList from "components/OrderList";
 import PageHeader from "components/PageHeader";
 import { useState } from "react";
-import { getApiUrlWithDateRange } from "utils/helpers";
+import {
+  formatPaginatedResult,
+  getApiUrlWithDateRange,
+  getPaginatedApiUrl,
+} from "utils/helpers";
 import styles from "./index.less";
 
 const { RangePicker } = DatePicker;
@@ -21,14 +25,26 @@ const Orders = () => {
     { initialData: [] }
   );
   const {
+    pagination,
     run: fetchOrders,
     data: orders,
     loading: ordersLoading,
   } = useRequest(
-    (startDate, endDate) =>
-      getApiUrlWithDateRange("/orders/my", startDate, endDate) +
-      `&bookTitle=${bookTitle}`,
-    { initialData: [], refreshDeps: [bookTitle] }
+    ({ current, pageSize }, startDate, endDate) =>
+      getApiUrlWithDateRange(
+        getPaginatedApiUrl("/orders/my", current, pageSize),
+        startDate,
+        endDate
+      ) + `&bookTitle=${bookTitle}`,
+    {
+      initialData: {
+        list: [],
+        totla: 0,
+      },
+      formatResult: formatPaginatedResult,
+      paginated: true,
+      refreshDeps: [bookTitle],
+    }
   );
   const {
     run: fetchBookStatistics,
@@ -43,12 +59,12 @@ const Orders = () => {
   const onDateRangeChange = async (_, dateStrings) => {
     const [start, end] = dateStrings;
     if (!start || !end) {
-      await fetchOrders();
+      await fetchOrders(pagination);
       await fetchOrderStatistics();
       await fetchBookStatistics();
       return;
     }
-    await fetchOrders(start, end);
+    await fetchOrders(pagination, start, end);
     await fetchOrderStatistics(start, end);
     await fetchBookStatistics(start, end);
   };
@@ -89,7 +105,11 @@ const Orders = () => {
       </Row>
       <Row gutter={16}>
         <Col span={20}>
-          <OrderList orders={orders} loading={ordersLoading} />
+          <OrderList
+            orders={orders?.list}
+            loading={ordersLoading}
+            pagination={pagination}
+          />
         </Col>
         <Col>
           <Divider type="vertical" className={styles.divider} />

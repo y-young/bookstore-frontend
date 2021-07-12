@@ -13,7 +13,7 @@ const Books = () => {
   );
 
   const onSearch = (keyword) => {
-    run(pagination, keyword);
+    run({ ...pagination, current: 0 }, keyword);
   };
 
   return (

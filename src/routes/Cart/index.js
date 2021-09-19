@@ -13,9 +13,9 @@ const Cart = () => {
     { method: "post", url: "/orders", data: cartItems },
     {
       manual: true,
-      onSuccess: (data) => {
+      onSuccess: () => {
         emptyCart();
-        history.push(`/orders/${data.id}`);
+        history.push("/orders/submitted");
       },
     }
   );

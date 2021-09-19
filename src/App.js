@@ -24,6 +24,7 @@ import Statistics from "routes/Statistics";
 import UserManagement from "routes/UserManagement";
 import { extend } from "umi-request";
 import styles from "./App.less";
+import OrderSubmitted from "./routes/OrderSubmitted";
 
 const App = () => {
   return (
@@ -99,6 +100,9 @@ const App = () => {
             </Route>
             <Route path="/cart">
               <Cart />
+            </Route>
+            <Route path="/orders/submitted">
+              <OrderSubmitted />
             </Route>
             <Route path="/orders/:orderId">
               <OrderDetail />

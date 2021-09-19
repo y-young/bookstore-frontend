@@ -1,4 +1,4 @@
-import { CheckCircleFilled } from "@ant-design/icons";
+import { CheckCircleFilled, CloseCircleFilled } from "@ant-design/icons";
 import useRequest from "@umijs/use-request";
 import { Button, Col, Divider, Row, Space, Spin, Typography } from "antd";
 import OrderBookList from "components/OrderBookList";
@@ -14,13 +14,21 @@ const OrderDetail = () => {
     <Spin spinning={loading}>
       <Row gutter={32} align="middle">
         <Col flex="70px">
-          <CheckCircleFilled className={styles.successIcon} />
+          {data?.status === "failed" ? (
+            <CloseCircleFilled className={styles.errorIcon} />
+          ) : (
+            <CheckCircleFilled className={styles.successIcon} />
+          )}
         </Col>
         <Col flex={1}>
           <Typography.Title level={2} className={styles.resultTitle}>
-            订单已完成
+            {data?.status === "failed" ? "订单未完成" : "订单已完成"}
           </Typography.Title>
-          <p className={styles.resultSubTitle}>以下是您的商品信息</p>
+          <p className={styles.resultSubTitle}>
+            {data?.status === "failed"
+              ? data.failedReason
+              : "以下是您的商品信息"}
+          </p>
         </Col>
         <Col className={styles.orderInfo}>
           订单编号：{data?.id}

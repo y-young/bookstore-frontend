@@ -6,7 +6,7 @@ const BookTypeStatistics = ({ data, loading }) => {
   return (
     <Skeleton loading={loading} active>
       <Row gutter={8} className={styles.bookTypeStatistics}>
-        {data.map((item) => (
+        {data?.map((item) => (
           <React.Fragment key={item.type}>
             <Col span={18}>{item.type}</Col>
             <Col span={6}>{item.count}</Col>

@@ -10,9 +10,7 @@ const Home = () => {
     useRequest("/books/bestSales");
   return (
     <>
-      <Typography.Title level={1} styles={{ textAlign: "center" }}>
-        你的知识，登上新高度。
-      </Typography.Title>
+      <Typography.Title level={1}>你的知识，登上新高度。</Typography.Title>
       <Typography.Title level={2} className="pageTitle">
         新书上架
       </Typography.Title>
@@ -20,7 +18,7 @@ const Home = () => {
       <Spin spinning={latestBooksLoading}>
         <Row gutter={32} className={styles.bookGrid}>
           {latestBooks?.map((book) => (
-            <Col span={6} key={book.id}>
+            <Col lg={6} md={8} sm={12} key={book.id}>
               <BookCard book={book} />
             </Col>
           ))}
@@ -33,7 +31,7 @@ const Home = () => {
       <Spin spinning={bestSalesLoading}>
         <Row gutter={32} className={styles.bookGrid}>
           {bestSales?.map((book) => (
-            <Col span={6} key={book.id}>
+            <Col lg={6} md={8} sm={12} key={book.id}>
               <BookCard book={book} />
             </Col>
           ))}

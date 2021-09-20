@@ -36,7 +36,7 @@ const Header = () => {
           align="middle"
           justify="space-around"
         >
-          <Col span={4}>
+          <Col>
             <div
               onClick={() => history.push("/")}
               className={styles.logoWrapper}
@@ -47,7 +47,7 @@ const Header = () => {
               </Typography.Title>
             </div>
           </Col>
-          <Col span={12}>
+          <Col md={12} xs={14}>
             <Menu mode="horizontal">
               <Menu.Item key="home" icon={<HomeOutlined />}>
                 <Link to="/">首页</Link>
@@ -91,7 +91,7 @@ const Header = () => {
               )}
             </Menu>
           </Col>
-          <Col span={6} offset={2}>
+          <Col md={6} sm={4} xs={2}>
             <Menu mode="horizontal" className={styles.rightSubMenu}>
               <Menu.Item key="cart" icon={<ShoppingCartOutlined />}>
                 <Link to="/cart">购物车</Link>

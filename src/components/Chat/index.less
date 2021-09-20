@@ -1,0 +1,80 @@
+@divider: 1px solid #eee;
+
+.launcher:global(.ant-btn) {
+  align-self: flex-end;
+  width: 50px;
+  height: 50px;
+  margin-top: 10px;
+  box-shadow: @medium-shadow;
+  border: none;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1000;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  width: 400px;
+  height: 400px;
+  background-color: white;
+  box-shadow: @medium-shadow;
+  border-radius: 10px;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.2s ease-in-out;
+  -webkit-transition: 0.2s ease-in-out;
+}
+
+.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 10;
+  bottom: 80px;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 13px;
+  border-bottom: @divider;
+}
+
+.title {
+  padding: 0 15px;
+  font-size: 18px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.userInfo {
+  padding: 0 15px;
+  display: flex;
+  align-items: center;
+  column-gap: 5px;
+}
+
+.messageList {
+  flex: 1;
+  overflow: auto;
+}
+
+.footer {
+  border-top: @divider;
+}
+
+.usernameInput {
+  flex-direction: row;
+  display: flex;
+}

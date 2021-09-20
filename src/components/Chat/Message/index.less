@@ -1,0 +1,27 @@
+.message {
+  padding: 5px 10px;
+}
+
+.detail {
+  margin-left: 10px;
+}
+
+.sender {
+  width: fit-content;
+  color: @text-color-secondary;
+  font-size: 10px;
+}
+
+.content {
+  width: fit-content;
+  background-color: #f4f4f4;
+  padding: 8px;
+  border-radius: 5px;
+  overflow-wrap: anywhere;
+}
+
+.eventMessage:extend(.message) {
+  text-align: center;
+  color: @text-color-secondary;
+  font-size: 13px;
+}

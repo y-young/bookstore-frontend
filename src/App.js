@@ -24,6 +24,7 @@ import Statistics from "routes/Statistics";
 import UserManagement from "routes/UserManagement";
 import { extend } from "umi-request";
 import styles from "./App.less";
+import Chat from "./components/Chat";
 import OrderSubmitted from "./routes/OrderSubmitted";
 
 const App = () => {
@@ -128,6 +129,7 @@ const App = () => {
             <Redirect from="*" to="/" />
           </Switch>
         </main>
+        <Chat />
         <Footer />
       </Router>
     </UseAPIProvider>

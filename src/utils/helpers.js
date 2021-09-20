@@ -61,3 +61,21 @@ export const formatPaginatedResult = (response) => {
     total: data.totalElements,
   };
 };
+
+export const colorMapping = (key) => {
+  const colors = [
+    "magenta",
+    "lime",
+    "orange",
+    "green",
+    "red",
+    "gold",
+    "volcano",
+    "cyan",
+    "blue",
+    "geekblue",
+    "purple",
+  ];
+
+  return colors[key % colors.length];
+};

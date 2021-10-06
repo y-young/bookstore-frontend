@@ -11,8 +11,8 @@ const BookDetailButton = ({ book }) => {
     { method: "post", url: "/orders", data: [{ book, amount: 1 }] },
     {
       manual: true,
-      onSuccess: (data) => {
-        history.push(`/orders/${data.id}`);
+      onSuccess: () => {
+        history.push("/orders/submitted");
       },
     }
   );

@@ -5,7 +5,7 @@ import {
   ShoppingCartOutlined,
 } from "@ant-design/icons";
 import ProList from "@ant-design/pro-list";
-import { Button, Col, Image, message, Row } from "antd";
+import { Button, Col, Image, message, Row, Typography } from "antd";
 import BookEditModal from "components/BookEditModal";
 import StockStatus from "components/StockStatus";
 import { forwardRef, useImperativeHandle, useState } from "react";
@@ -129,6 +129,15 @@ const BookList = forwardRef(
                   <span className={styles.bookAuthor}>{book.author}</span>
                   <br />
                   ISBN: {book.isbn}
+                  <br />
+                  <Typography.Paragraph
+                    ellipsis={{
+                      rows: 3,
+                      expandable: true,
+                    }}
+                  >
+                    {book?.description}
+                  </Typography.Paragraph>
                 </>
               ),
             },
@@ -139,7 +148,7 @@ const BookList = forwardRef(
             },
             content: {
               render: (_, book) => (
-                <Row>
+                <Row style={{ marginLeft: 10 }}>
                   <Col flex="2 1">
                     <StockStatus stock={book.stock} />
                   </Col>

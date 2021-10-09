@@ -1,9 +1,10 @@
 import useRequest from "@umijs/use-request";
 import { Col, Row, Skeleton } from "antd";
 import BookCoverCard from "components/BookCoverCard";
-import BookDescription from "components/BookDescription";
 import BookDetailButton from "components/BookDetailButton";
+import BookInfo from "components/BookInfo";
 import { useParams } from "react-router-dom";
+import BookDescription from "../../components/BookDescription";
 
 const BookDetail = () => {
   const { bookId } = useParams();
@@ -17,11 +18,12 @@ const BookDetail = () => {
         </Col>
         <Col span={14}>
           <Skeleton loading={loading} active={true}>
-            <BookDescription book={data} />
+            <BookInfo book={data} />
             <BookDetailButton book={data} />
           </Skeleton>
         </Col>
       </Row>
+      <BookDescription book={data} loading={loading} />
     </>
   );
 };

@@ -6,6 +6,8 @@ import { getCoverUrl, imageBasePath } from "utils/helpers";
 import useAuth from "utils/useAuth";
 import styles from "./index.less";
 
+const { TextArea } = Input;
+
 const BookEditModal = ({ book, isVisible, closeCallback }) => {
   const auth = useAuth();
   const [form] = Form.useForm();
@@ -40,6 +42,7 @@ const BookEditModal = ({ book, isVisible, closeCallback }) => {
 
   useEffect(() => {
     form.resetFields();
+    setCoverFile([]);
     if (book) {
       setCoverFile([{ name: book.cover, thumbUrl: getCoverUrl(book.cover) }]);
     }
@@ -124,7 +127,7 @@ const BookEditModal = ({ book, isVisible, closeCallback }) => {
     >
       <Form
         form={form}
-        name="editBook"
+        name={book ? "editBook" : "addBook"}
         initialValues={
           book
             ? {
@@ -194,6 +197,9 @@ const BookEditModal = ({ book, isVisible, closeCallback }) => {
               uploadButton
             )}
           </Upload>
+        </Form.Item>
+        <Form.Item name="description" label="简介">
+          <TextArea placeholder="简介" showCount autoSize />
         </Form.Item>
       </Form>
     </Modal>

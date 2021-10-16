@@ -6,14 +6,13 @@ import { formatPaginatedResult, getPaginatedApiUrl } from "utils/helpers";
 
 const Books = () => {
   const { run, data, loading, pagination } = useRequest(
-    ({ current, pageSize }, keyword) =>
-      getPaginatedApiUrl("/books", current, pageSize) +
-      `&keyword=${keyword || ""}`,
+    ({ current, pageSize }, query) =>
+      getPaginatedApiUrl("/books", current, pageSize) + `&query=${query || ""}`,
     { formatResult: formatPaginatedResult, paginated: true }
   );
 
-  const onSearch = (keyword) => {
-    run({ ...pagination, current: 0 }, keyword);
+  const onSearch = (query) => {
+    run({ ...pagination, current: 0 }, query);
   };
 
   return (

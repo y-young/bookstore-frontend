@@ -11,9 +11,8 @@ const BookManagement = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const bookListRef = createRef();
   const { run, data, loading, pagination, refresh } = useRequest(
-    ({ current, pageSize }, keyword) =>
-      getPaginatedApiUrl("/books", current, pageSize) +
-      `&keyword=${keyword || ""}`,
+    ({ current, pageSize }, query) =>
+      getPaginatedApiUrl("/books", current, pageSize) + `&query=${query || ""}`,
     { formatResult: formatPaginatedResult, paginated: true }
   );
   const { run: onDeleteBook, loading: deleteLoading } = useRequest(
@@ -44,8 +43,8 @@ const BookManagement = () => {
     }
   );
 
-  const onSearch = (keyword) => {
-    run(pagination, keyword);
+  const onSearch = (query) => {
+    run(pagination, query);
   };
 
   const addBook = () => {

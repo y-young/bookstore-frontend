@@ -74,7 +74,7 @@ const Chat = () => {
   const handleToggle = () => setOpen(!open);
 
   useEffect(() => {
-    const ws = new WebSocket("ws://localhost:8080/chat");
+    const ws = new WebSocket("wss://bookstore.gpx.moe:8080/chat");
     ws.addEventListener("open", () => setSocket(ws));
     ws.onmessage = handleMessage;
     ws.onclose = () => setSocket(undefined);

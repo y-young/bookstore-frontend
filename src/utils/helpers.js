@@ -1,4 +1,4 @@
-const apiBasePath = "http://localhost:8080";
+const apiBasePath = "https://bookstore.gpx.moe:8080";
 
 export const currencyFormat = (amount) => {
   amount = amount / 100;

@@ -34,7 +34,7 @@ const Settings = () => {
               {user?.username}
             </Form.Item>
             <Form.Item label="电子邮件地址" {...layout}>
-              {user?.email}
+              {user?.email.address}
             </Form.Item>
             <Form.Item
               name="password"

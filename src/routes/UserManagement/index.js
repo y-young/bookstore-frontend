@@ -47,7 +47,7 @@ const UserManagement = () => {
     },
     {
       title: "电子邮件地址",
-      dataIndex: "email",
+      dataIndex: ["email", "address"],
       key: "email",
     },
     {

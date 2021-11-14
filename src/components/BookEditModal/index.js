@@ -95,8 +95,8 @@ const BookEditModal = ({ book, isVisible, closeCallback }) => {
     }
     if (info.file.status === "done") {
       const response = info.file.response;
-      const { filename } = response.data;
-      setCoverFile([{ name: filename, thumbUrl: getCoverUrl(filename) }]);
+      const { id } = response.data;
+      setCoverFile([{ name: id, thumbUrl: getCoverUrl(id) }]);
       setUploadLoading(false);
     }
   };

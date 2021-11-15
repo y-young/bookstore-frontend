@@ -25,6 +25,7 @@ import UserManagement from "routes/UserManagement";
 import { extend } from "umi-request";
 import styles from "./App.less";
 import Chat from "./components/Chat";
+import BooksByTag from "./routes/BooksByTag";
 import OrderSubmitted from "./routes/OrderSubmitted";
 
 const App = () => {
@@ -92,6 +93,9 @@ const App = () => {
             </Route>
             <Route path="/register">
               <Register />
+            </Route>
+            <Route path="/books/tag/:tag">
+              <BooksByTag />
             </Route>
             <Route path="/books/:bookId">
               <BookDetail />

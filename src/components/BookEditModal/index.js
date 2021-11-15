@@ -1,6 +1,6 @@
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import useRequest from "@umijs/use-request";
-import { Form, Input, InputNumber, message, Modal, Upload } from "antd";
+import { Form, Input, InputNumber, message, Modal, Select, Upload } from "antd";
 import { useEffect, useState } from "react";
 import { getCoverUrl, imageBasePath } from "utils/helpers";
 import useAuth from "utils/useAuth";
@@ -152,6 +152,9 @@ const BookEditModal = ({ book, isVisible, closeCallback }) => {
         </Form.Item>
         <Form.Item name="type" label="分类">
           <Input placeholder="分类" />
+        </Form.Item>
+        <Form.Item name="tags" label="标签">
+          <Select mode="tags" placeholder="标签" open={false} />
         </Form.Item>
         <Form.Item name="price" label="定价" rules={[{ required: true }]}>
           <InputNumber

@@ -1,5 +1,6 @@
 import { Tag, Typography } from "antd";
 import StockStatus from "components/StockStatus";
+import { Link } from "react-router-dom";
 import { currencyFormat } from "utils/helpers";
 import styles from "./index.less";
 
@@ -11,11 +12,15 @@ const BookInfo = ({ book = {} }) => {
       <Typography.Title level={2}>{title}</Typography.Title>
       <div className={styles.bookMeta}>
         <p className={styles.bookAuthor}>{author}</p>
-        {book.type && (
-          <p>
-            <Tag color="blue">{book.type}</Tag>
-          </p>
-        )}
+        <p>
+          {book?.type && <Tag color="blue">{book.type}</Tag>}
+          {book?.tags &&
+            book.tags.map((tag) => (
+              <Link to={`/books/tag/${tag}`} key={tag}>
+                <Tag color="green">{tag}</Tag>
+              </Link>
+            ))}
+        </p>
         <p>ISBN：{isbn}</p>
         <p>
           状态：
